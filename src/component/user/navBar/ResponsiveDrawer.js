@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
-import { useContexto } from '../context/CartContex';
+import { useCartContext } from '../../context/CartContext';
 
 const drawerWidth = 240;
 
@@ -68,7 +68,7 @@ const navItems = [
 
 export default function PersistentDrawerLeft() {
 	const [open, setOpen] = React.useState(false);
-	const { cantidad } = useContexto();
+	const { quantity } = useCartContext();
 
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);
@@ -84,9 +84,9 @@ export default function PersistentDrawerLeft() {
 					<Typography variant='h6' noWrap component={Link} to='/' onClick={handleDrawerClose}>
 						***ABrillar***
 					</Typography>
-					{cantidad() > 0 && (
+					{quantity() > 0 && (
 						<IconButton color='inherit' component={Link} to='/carrito'>
-							<Badge badgeContent={cantidad()}>
+							<Badge badgeContent={quantity()}>
 								<ShoppingCartIcon />
 							</Badge>
 						</IconButton>
