@@ -1,11 +1,11 @@
 import React from 'react';
-import { useCartContext } from '../../context/CartContext';
 import { IconButton, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useCartContext } from '../../context/CartContext';
 
 const Cart = () => {
 	const { cartItems, quantity, increaseQuantity, decreaseQuantity, removeFromCart, totalPrice, clearCart } = useCartContext();

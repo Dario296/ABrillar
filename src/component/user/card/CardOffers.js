@@ -3,9 +3,9 @@ import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typo
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useCartContext } from '../../context/CartContext';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import app from '../config/firebase';
+import { useCartContext } from '../../context/CartContext';
+import app from '../../config/firebase';
 
 const db = getFirestore(app);
 
