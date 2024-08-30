@@ -15,13 +15,13 @@ export default function RecipeReviewCard({ product }) {
 
 	const price = calculatePrice(product.costo, product.porcentaje);
 
-	const handleSumar = () => {
+	const handleAdd = () => {
 		if (quantity < product.stock) {
 			setQuantity((prevQuantity) => prevQuantity + 1);
 		}
 	}; // Maneja el incremento de la cantidad, sin superar el stock
 
-	const handleRestar = () => {
+	const handleRemove = () => {
 		if (quantity > 0) {
 			setQuantity((prevQuantity) => prevQuantity - 1);
 		}
@@ -52,11 +52,11 @@ export default function RecipeReviewCard({ product }) {
 			<CardActions disableSpacing>
 				{product.stock > 0 ? (
 					<>
-						<IconButton className='Restar' onClick={handleRestar}>
+						<IconButton className='Restar' onClick={handleRemove}>
 							<RemoveIcon />
 						</IconButton>
 						<Typography className='Cantidad'>{quantity}</Typography>
-						<IconButton className='Sumar' onClick={handleSumar}>
+						<IconButton className='Sumar' onClick={handleAdd}>
 							<AddIcon />
 						</IconButton>
 						<IconButton onClick={handleAgregar} className='Añadir'>

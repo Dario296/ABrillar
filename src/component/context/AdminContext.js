@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 		if (isAuthenticated) {
 			setIsAuthenticated(true);
 		}
-	}, []);
+	}, []); // Cargar el inicio del admin desde localStorage al iniciar.
 
 	const login = (name, pass) => {
 		const admin = process.env.REACT_APP_ADMIN;
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 		if ((name === admin || name === admin1) && (pass === password || pass === password1)) {
 			localStorage.setItem('admin', true);
 			setIsAuthenticated(true);
-		}
+		} //Comparo que las credenciales sean iguales que las variables de entorno presentes.
 	};
 
 	const logout = () => {

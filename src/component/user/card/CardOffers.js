@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typo
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useContexto } from '../context/CartContex';
+import { useCartContext } from '../../context/CartContext';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import app from '../config/firebase';
 
@@ -13,8 +13,8 @@ export default function RecipeReviewCard({ producto }) {
 	const [productRef, setProductRef] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [cantidad, setCantidad] = useState(0);
-	const { agregarCarrito, estaEnCarrito } = useContexto();
+	const [quantity, setQuantity] = useState(0);
+	const { addToCart } = useCartContext();
 
 	useEffect(() => {
 		const fetchProductRef = async () => {
@@ -36,76 +36,74 @@ export default function RecipeReviewCard({ producto }) {
 		fetchProductRef();
 	}, [producto.referencia]);
 
-	const handleSumar = () => {
-		if (productRef && cantidad < Math.floor(productRef.stock / producto.unidades)) {
-			setCantidad(cantidad + 1);
-		}
-	};
+	const stockAvailable = Math.floor(productRef.stock / producto.unidades);
+	const price = Math.round((productRef.costo * producto.unidades + (productRef.costo * producto.unidades * producto.porcentaje) / 100) / 10) * 10; // Calcula el precio redondeado basado en costo y porcentaje multiplicado por las unidades de la oferta
 
-	const handleRestar = () => {
-		if (cantidad > 0) {
-			setCantidad(cantidad - 1);
+	const handleAdd = () => {
+		if (quantity < stockAvailable) {
+			setQuantity(quantity + 1);
 		}
-	};
+	}; // Maneja el incremento de la cantidad, sin superar el stock
+
+	const handleRemove = () => {
+		if (quantity > 0) {
+			setQuantity(quantity - 1);
+		}
+	}; // Maneja la reducción de la cantidad, asegurándose de que no baje de 0
 
 	const handleAgregar = () => {
-		if (cantidad > 0) {
+		if (quantity > 0) {
 			const productoAgregar = {
 				ID: producto.ID,
 				nombre: producto.nombre,
-				precio: Math.round((productRef.costo * producto.unidades * (1 + producto.porcentaje / 100)) / 10) * 10,
+				precio: price,
 				cantidad,
-				stock: Math.floor(productRef.stock / producto.unidades),
+				stock: stockAvailable,
 			};
-			agregarCarrito(productoAgregar);
-			setCantidad(0); // Reiniciar la cantidad después de agregar
+			addToCart(productoAgregar);
+			setQuantity(0); // Reiniciar la cantidad después de agregar
 		}
-	};
+	}; // Añade el producto al carrito y reinicia la cantidad
 
 	if (loading) {
 		return <CircularProgress />;
-	}
+	} // Muestra indicador de carga mientras se cargan el producto
 
 	if (error) {
-		return <Typography color="error">{error}</Typography>;
-	}
+		return <Typography color='error'>{error}</Typography>;
+	} // Muestra un mensaje de error en caso de que algo falle
 
 	if (!productRef) {
 		return null;
-	}
-
-	const stockDisponible = Math.floor(productRef.stock / producto.unidades);
-	const precio = Math.round((productRef.costo * producto.unidades * (1 + producto.porcentaje / 100)) / 10) * 10;
+	} // Muestra un mensaje de error en caso de que algo falle
 
 	return (
 		<Card className='Card'>
-			<CardHeader title={producto.nombre} action={`$${precio}`} />
+			<CardHeader title={producto.nombre} action={`$${price}`} />
 			<CardMedia component='img' height='194' image={producto.img} alt={`Imagen de ${producto.nombre}`} />
 			<CardContent>
 				<Typography className='Descripcion'>{producto.descripcion1}</Typography>
 				{producto.descripcion2 && <Typography className='Descripcion'>({producto.descripcion2})</Typography>}
 			</CardContent>
-			{estaEnCarrito(producto.ID) ? null : (
-				<CardActions disableSpacing>
-					{stockDisponible > 0 ? (
-						<>
-							<IconButton className='Restar' onClick={handleRestar}>
-								<RemoveIcon />
-							</IconButton>
-							<Typography className='Cantidad'>{cantidad}</Typography>
-							<IconButton className='Sumar' onClick={handleSumar}>
-								<AddIcon />
-							</IconButton>
-							<IconButton onClick={handleAgregar} className='Añadir'>
-								<Typography>Añadir</Typography>
-								<AddShoppingCartIcon />
-							</IconButton>
-						</>
-					) : (
-						<Typography>No hay stock de este producto</Typography>
-					)}
-				</CardActions>
-			)}
+			<CardActions disableSpacing>
+				{stockAvailable > 0 ? (
+					<>
+						<IconButton className='Restar' onClick={handleRemove}>
+							<RemoveIcon />
+						</IconButton>
+						<Typography className='Cantidad'>{quantity}</Typography>
+						<IconButton className='Sumar' onClick={handleAdd}>
+							<AddIcon />
+						</IconButton>
+						<IconButton onClick={handleAgregar} className='Añadir'>
+							<Typography>Añadir</Typography>
+							<AddShoppingCartIcon />
+						</IconButton>
+					</>
+				) : (
+					<Typography>No hay stock de este producto</Typography>
+				)}
+			</CardActions>
 		</Card>
 	);
 }
