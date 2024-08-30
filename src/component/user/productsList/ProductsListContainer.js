@@ -39,28 +39,27 @@ const ProductsListContainer = () => {
 
 	if (loading) {
 		return (
-			<Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+			<Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
 				<CircularProgress />
 			</Grid>
 		);
-	}// Muestra indicador de carga mientras se cargan los productos
+	} // Muestra indicador de carga mientras se cargan los productos
 
 	if (error) {
 		return (
-			<Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
-				<Typography variant="h6" color="error">{error}</Typography>
+			<Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
+				<Typography variant='h6' color='error'>
+					{error}
+				</Typography>
 			</Grid>
 		);
-	}// Muestra un mensaje de error en caso de que algo falle
+	} // Muestra un mensaje de error en caso de que algo falle
 
 	return (
 		<Grid container spacing={4} direction='row' justifyContent='space-around' alignItems='center'>
 			{productsList.map((product) => (
 				<Grid item key={product.ID}>
-					{categoria === "ofertas"
-						? <RecipeReviewCardOffers product={product} />
-						: <RecipeReviewCard product={product} />
-					}
+					{categoria === 'ofertas' ? <RecipeReviewCardOffers product={product} /> : <RecipeReviewCard product={product} />}
 				</Grid>
 			))}
 		</Grid>
