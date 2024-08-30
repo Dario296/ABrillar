@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 import app from '../../config/firebase';
@@ -21,9 +21,9 @@ const ProductsListContainer = () => {
 				const ref = collection(db, 'ListadoProductos');
 				const answer = query(ref, where('categoria', '==', categoria));
 				const snapshot = await getDocs(answer);
-				let Products = snapshot.docs.map((doc) => ({ ID: doc.id, ...doc.data() }));
-				Products = Products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordena productos por nombre
-				setProductsList(Products);
+				let products = snapshot.docs.map((doc) => ({ ID: doc.id, ...doc.data() }));
+				products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordena productos por nombre
+				setProductsList(products);
 			} catch (err) {
 				setError('Error al cargar los productos.');
 				console.error(err);
@@ -34,24 +34,33 @@ const ProductsListContainer = () => {
 
 		fetchProducts();
 
-		return () => {
-			setProductsList([]);
-		};
+		return () => setProductsList([]); // Limpia los productos al desmontar
 	}, [categoria]);
 
 	if (loading) {
-		return <CircularProgress />;
-	}
+		return (
+			<Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+				<CircularProgress />
+			</Grid>
+		);
+	}// Muestra indicador de carga mientras se cargan los productos
 
 	if (error) {
-		return <p>{error}</p>;
-	}
+		return (
+			<Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+				<Typography variant="h6" color="error">{error}</Typography>
+			</Grid>
+		);
+	}// Muestra un mensaje de error en caso de que algo falle
 
 	return (
 		<Grid container spacing={4} direction='row' justifyContent='space-around' alignItems='center'>
-			{productsList.map((Products) => (
-				<Grid item key={Products.ID}>
-					{categoria === "ofertas"? <RecipeReviewCardOffers producto={Products} /> : <RecipeReviewCard Products={Products} />}
+			{productsList.map((product) => (
+				<Grid item key={product.ID}>
+					{categoria === "ofertas"
+						? <RecipeReviewCardOffers product={product} />
+						: <RecipeReviewCard product={product} />
+					}
 				</Grid>
 			))}
 		</Grid>
