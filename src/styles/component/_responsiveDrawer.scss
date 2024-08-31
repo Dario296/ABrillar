@@ -1,0 +1,12 @@
+@use '../utils/shared' as *;
+
+.NavBar{
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+}
+
+.Flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

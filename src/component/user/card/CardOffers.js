@@ -34,9 +34,9 @@ export default function RecipeReviewCard({ producto }) {
 		};
 
 		fetchProductRef();
-	}, [producto.referencia]);
+	}, [producto.referencia]); // Busca el producto del cual se hace referencia la oferta
 
-	const stockAvailable = Math.floor(productRef.stock / producto.unidades);
+	const stockAvailable = Math.floor(productRef.stock / producto.unidades); // calcula el stock disponible de la oferta dividiendo el stock por las unidades de la oferta
 	const price = Math.round((productRef.costo * producto.unidades + (productRef.costo * producto.unidades * producto.porcentaje) / 100) / 10) * 10; // Calcula el precio redondeado basado en costo y porcentaje multiplicado por las unidades de la oferta
 
 	const handleAdd = () => {
@@ -57,7 +57,7 @@ export default function RecipeReviewCard({ producto }) {
 				ID: producto.ID,
 				nombre: producto.nombre,
 				precio: price,
-				cantidad,
+				cantidad: quantity,
 				stock: stockAvailable,
 			};
 			addToCart(productoAgregar);
@@ -83,7 +83,6 @@ export default function RecipeReviewCard({ producto }) {
 			<CardMedia component='img' height='194' image={producto.img} alt={`Imagen de ${producto.nombre}`} />
 			<CardContent>
 				<Typography className='Descripcion'>{producto.descripcion1}</Typography>
-				{producto.descripcion2 && <Typography className='Descripcion'>({producto.descripcion2})</Typography>}
 			</CardContent>
 			<CardActions disableSpacing>
 				{stockAvailable > 0 ? (

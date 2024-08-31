@@ -10,12 +10,11 @@ import { useCartContext } from '../../context/CartContext';
 const Cart = () => {
 	const { cartItems, quantity, increaseQuantity, decreaseQuantity, removeFromCart, totalPrice, clearCart } = useCartContext();
 
-	// Ordenar los productos por nombre
-	cartItems.sort((a, b) => a.nombre.localeCompare(b.nombre));
+	cartItems.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar los productos por nombre
 
 	return (
 		<div>
-			<Table striped bordered hover size="sm" responsive>
+			<Table striped bordered hover size='sm' responsive>
 				<thead>
 					<tr>
 						<th>Nombre</th>
@@ -30,27 +29,18 @@ const Cart = () => {
 						<tr key={producto.ID}>
 							<td>{producto.nombre}</td>
 							<td>
-								<IconButton
-									onClick={() => decreaseQuantity(producto.ID)}
-									aria-label="Disminuir cantidad"
-								>
+								<IconButton onClick={() => decreaseQuantity(producto.ID)} aria-label='Disminuir cantidad'>
 									<RemoveIcon />
 								</IconButton>
 								{producto.cantidad}
-								<IconButton
-									onClick={() => increaseQuantity(producto.ID)}
-									aria-label="Aumentar cantidad"
-								>
+								<IconButton onClick={() => increaseQuantity(producto.ID)} aria-label='Aumentar cantidad'>
 									<AddIcon />
 								</IconButton>
 							</td>
 							<td>{producto.precio.toFixed(2)}</td>
 							<td>{(producto.precio * producto.cantidad).toFixed(2)}</td>
 							<td>
-								<IconButton
-									onClick={() => removeFromCart(producto.ID)}
-									aria-label="Eliminar producto"
-								>
+								<IconButton onClick={() => removeFromCart(producto.ID)} aria-label='Eliminar producto'>
 									<DeleteIcon />
 								</IconButton>
 							</td>
@@ -70,11 +60,11 @@ const Cart = () => {
 					</tr>
 				</tbody>
 			</Table>
-			<div className="Cart">
-				<Button variant="contained" color="secondary" onClick={clearCart}>
+			<div className='Cart'>
+				<Button variant='contained' color='secondary' onClick={clearCart}>
 					Vaciar carrito
 				</Button>
-				<Button variant="contained" color="primary" component={Link} to="/realizarpedido">
+				<Button variant='contained' color='primary' component={Link} to='/realizarpedido'>
 					Terminar pedido
 				</Button>
 			</div>

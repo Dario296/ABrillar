@@ -1,46 +1,25 @@
-import React, { useState } from 'react';
-import { Button, FormControl, Input, InputLabel, Typography } from '@mui/material';
+import React from 'react';
+import { Button, FormControl, Input, InputLabel } from '@mui/material';
+import { useForm } from "react-hook-form"
 import { useAuth } from '../../context/AdminContext';
 
 const Login = () => {
 	const { login } = useAuth();
-	const [data, setData] = useState({
-		nombre: '',
-		password: '',
-	});
-	const [error, setError] = useState('');
-
-	const changeInput = (event) => {
-		setData({
-			...data,
-			[event.target.name]: event.target.value,
-		});
-	};
-
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		setError('');
-
-		if (data.nombre && data.password) {
-			login(data.nombre, data.password).catch(() => {
-				setError('Nombre o contraseña incorrectos');
-			});
-		} else {
-			setError('Por favor, complete todos los campos.');
-		}
-	};
+	const { register,handleSubmit, formState: { errors } } = useForm()
+	const onSubmit = (data) => login(data.name, data.password)
 
 	return (
-		<form className='formularioLogin' onSubmit={handleSubmit}>
+		<form className='formularioLogin' onSubmit={handleSubmit(onSubmit)}>
 			<FormControl className='controles' margin='normal' fullWidth>
-				<InputLabel htmlFor='nombre'>Nombre</InputLabel>
-				<Input id='nombre' onChange={changeInput} name='nombre' value={data.nombre} required type='text' />
+				<InputLabel>Nombre</InputLabel>
+				<Input type='text'{...register('name', {required: {value:true, message:'El nombre es obligatorio'} })} />
+				{errors.name && <span>{errors.name.message}</span>}
 			</FormControl>
 			<FormControl className='controles' margin='normal' fullWidth>
-				<InputLabel htmlFor='password'>Contraseña</InputLabel>
-				<Input id='password' onChange={changeInput} name='password' value={data.password} required type='password' />
+				<InputLabel>Contraseña</InputLabel>
+				<Input type='password' {...register('password', {required: {value:true, message:'La contraseña es obligatorio'} })}/>
+				{errors.password && <span>{errors.password.message}</span>}
 			</FormControl>
-			{error && <Typography color='error'>{error}</Typography>}
 			<Button type='submit' variant='contained' color='primary'>
 				Iniciar
 			</Button>

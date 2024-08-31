@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import whatsappIcon from './floating-whatsapp.png';
 
 const WhatsappButton = () => {

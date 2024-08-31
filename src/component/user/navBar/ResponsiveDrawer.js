@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Drawer, CssBaseline, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemText, Badge } from '@mui/material';
+import { Box, Drawer, CssBaseline, Toolbar, List, Typography, IconButton, ListItem, ListItemButton, ListItemText, Badge } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -55,7 +55,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const navItems = [
 	{ text: 'Ofertas', to: '/productos/ofertas' },
 	{ text: 'Autos', to: '/productos/autos' },
-	{ text: 'Baño', to: '/productos/baños' },
+	{ text: 'Baños', to: '/productos/baños' },
 	{ text: 'Bolsas', to: '/productos/bolsas' },
 	{ text: 'Cocina', to: '/productos/cocina' },
 	{ text: 'Insecticidas', to: '/productos/insecticidas' },
@@ -84,13 +84,15 @@ export default function PersistentDrawerLeft() {
 					<Typography variant='h6' noWrap component={Link} to='/' onClick={handleDrawerClose}>
 						***ABrillar***
 					</Typography>
-					{quantity() > 0 && (
-						<IconButton color='inherit' component={Link} to='/carrito'>
-							<Badge badgeContent={quantity()}>
-								<ShoppingCartIcon />
-							</Badge>
-						</IconButton>
-					)}
+					<div>
+						{quantity() > 0 && (
+							<IconButton color='inherit' component={Link} to='/carrito'>
+								<Badge badgeContent={quantity()}>
+									<ShoppingCartIcon />
+								</Badge>
+							</IconButton>
+						)}
+					</div>
 				</Toolbar>
 			</AppBar>
 			<Drawer
