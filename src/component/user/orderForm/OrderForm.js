@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Button, FormControl, Input, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import React from 'react';
+import { Button, FormControl, Input, InputLabel, MenuItem, Select } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 import app from '../../config/firebase';
 import { useCartContext } from '../../context/CartContext';
 
@@ -9,93 +11,77 @@ const db = getFirestore(app);
 
 const OrderForm = () => {
 	const { cartItems, totalPrice, clearCart } = useCartContext();
-
-	const [data, setData] = useState({
-		nombre: '',
-		direccion: '',
-		telefono: '',
-		formaDePago: '',
-	});
-
-	const [error, setError] = useState('');
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
 	let total = totalPrice();
 
-	const changeInput = (event) => {
-		setData({
-			...data,
-			[event.target.name]: event.target.value,
-		});
-	};
-
-	const sendOrder = () => {
-		let productos = cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio.toFixed(2)}`).join(', ');
-		let cliente = `Nombre: ${data.nombre}, Dirección: ${data.direccion}, Teléfono: ${data.telefono}, Forma de pago: ${data.formaDePago}`;
-		let mensaje = `${productos}. Total: $${total.toFixed(2)}. ${cliente}`;
-		window.location.href = `https://api.whatsapp.com/send?phone=5493516062623&text=${encodeURIComponent(mensaje)}`;
-	};
-
-	const confirmPurchase = async (e) => {
-		e.preventDefault();
-		if (!data.nombre || !data.direccion || !data.telefono || !data.formaDePago) {
-			setError('Por favor, complete todos los campos.');
-			return;
-		}
-
-		setError('');
-
+	const onSubmit = async (data) => {
 		const order = {
 			Comprador: data,
 			Items: cartItems,
 			Total: total,
 		};
-
 		try {
 			const orderRef = collection(db, 'Pedidos');
 			await addDoc(orderRef, order);
-			sendOrder();
+			// Crear mensaje para WhatsApp
+			let productos = cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio.toFixed(2)}`).join(', ');
+			let cliente = `Nombre: ${data.nombre}, Dirección: ${data.direccion}, Teléfono: ${data.telefono}, Forma de pago: ${data.formaDePago}`;
+			let mensaje = `${productos}. Total: $${total.toFixed(2)}. ${cliente}`;
+			// Enviar mensaje a WhatsApp
+			window.location.href = `https://api.whatsapp.com/send?phone=5493512591067&text=${encodeURIComponent(mensaje)}`;
+			// Limpiar carrito y formulario
 			clearCart();
 		} catch (error) {
-			console.error('Error al crear el pedido: ', error);
-			setError('Hubo un problema al procesar su pedido.');
+			Swal.fire({
+				icon: 'error',
+				text: 'Hubo un problema al procesar su pedido.',
+			});
 		}
 	};
 
 	return (
-		<form className='formularioPedido' onSubmit={confirmPurchase}>
+		<form className='formularioPedido' onSubmit={handleSubmit(onSubmit)}>
 			<Grid container spacing={3}>
 				<Grid item xs={12} sm={6}>
 					<FormControl fullWidth margin='normal'>
 						<InputLabel>Nombre</InputLabel>
-						<Input onChange={changeInput} name='nombre' required type='text' />
+						<Input type='text' {...register('nombre', { required: { value: true, message: 'El nombre es obligatorio' } })} />
+						{errors.nombre && <span style={{ color: 'red' }}>{errors.nombre.message}</span>}
 					</FormControl>
 				</Grid>
 
 				<Grid item xs={12} sm={6}>
 					<FormControl fullWidth margin='normal'>
 						<InputLabel>Dirección</InputLabel>
-						<Input onChange={changeInput} name='direccion' required type='text' />
+						<Input type='text' {...register('direccion', { required: { value: true, message: 'La direccion es obligatoria' } })} />
+						{errors.direccion && <span style={{ color: 'red' }}>{errors.direccion.message}</span>}
 					</FormControl>
 				</Grid>
 
 				<Grid item xs={12} sm={6}>
 					<FormControl fullWidth margin='normal'>
 						<InputLabel>Teléfono</InputLabel>
-						<Input onChange={changeInput} name='telefono' required type='tel' />
+						<Input type='tel' {...register('telefono', { required: { value: true, message: 'El telefono es obligatorio' } })} />
+						{errors.telefono && <span style={{ color: 'red' }}>{errors.telefono.message}</span>}
 					</FormControl>
 				</Grid>
 
 				<Grid item xs={12} sm={6}>
 					<FormControl fullWidth margin='normal'>
 						<InputLabel>Forma de Pago</InputLabel>
-						<Select onChange={changeInput} name='formaDePago' required>
+						<Select {...register('formaDePago', { required: { value: true, message: 'Debe selecionar una forma de pago' } })}>
 							<MenuItem value='Efectivo'>Efectivo</MenuItem>
 							<MenuItem value='Transferencia bancaria'>Transferencia bancaria</MenuItem>
 						</Select>
+						{errors.formaDePago && <span style={{ color: 'red' }}>{errors.formaDePago.message}</span>}
 					</FormControl>
 				</Grid>
 			</Grid>
-			{error && <Typography color='error'>{error}</Typography>}
 			<Button type='submit' variant='contained' color='primary'>
 				Confirmar Pedido
 			</Button>

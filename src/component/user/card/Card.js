@@ -10,7 +10,7 @@ export default function RecipeReviewCard({ product }) {
 	const { addToCart } = useCartContext();
 
 	const calculatePrice = (cost, porcentaje) => {
-		return Math.round((cost + (cost * porcentaje) / 100) / 10) * 10;
+		return Math.ceil((cost + (cost * porcentaje) / 100) / 50) * 50;
 	}; // Calcula el precio redondeado basado en costo y porcentaje
 
 	const price = calculatePrice(product.costo, product.porcentaje);

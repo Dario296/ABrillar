@@ -26,7 +26,6 @@ const ProductsListContainer = () => {
 				setProductsList(products);
 			} catch (err) {
 				setError('Error al cargar los productos.');
-				console.error(err);
 			} finally {
 				setLoading(false);
 			}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadFull } from "tsparticles";
 
@@ -13,16 +13,11 @@ const Particle = () => {
         });
     }, []);
 
-    const particlesLoaded = useCallback((container) => {
-        console.log(container);
-    }, []);
-
     return (
         <>
             {init && (
                 <Particles
                     id="tsparticles"
-                    particlesLoaded={particlesLoaded}
                     options={{
                         fpsLimit: 120,
                         interactivity: {

@@ -9,8 +9,8 @@ import app from '../../config/firebase';
 
 const db = getFirestore(app);
 
-export default function RecipeReviewCard({ producto }) {
-	const [productRef, setProductRef] = useState(null);
+export default function RecipeReviewCard({ product }) {
+	const [productRef, setProductRef] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [quantity, setQuantity] = useState(0);
@@ -19,7 +19,7 @@ export default function RecipeReviewCard({ producto }) {
 	useEffect(() => {
 		const fetchProductRef = async () => {
 			try {
-				const productDoc = await getDoc(doc(db, 'ListadoProductos', producto.referencia));
+				const productDoc = await getDoc(doc(db, 'ListadoProductos', product.referencia));
 				if (productDoc.exists()) {
 					setProductRef(productDoc.data());
 				} else {
@@ -27,17 +27,16 @@ export default function RecipeReviewCard({ producto }) {
 				}
 			} catch (err) {
 				setError('Error al cargar los datos del producto');
-				console.error(err);
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		fetchProductRef();
-	}, [producto.referencia]); // Busca el producto del cual se hace referencia la oferta
+	}, [product.referencia]); // Busca el producto del cual se hace referencia la oferta
 
-	const stockAvailable = Math.floor(productRef.stock / producto.unidades); // calcula el stock disponible de la oferta dividiendo el stock por las unidades de la oferta
-	const price = Math.round((productRef.costo * producto.unidades + (productRef.costo * producto.unidades * producto.porcentaje) / 100) / 10) * 10; // Calcula el precio redondeado basado en costo y porcentaje multiplicado por las unidades de la oferta
+	const stockAvailable = Math.floor(productRef.stock / product.unidades); // calcula el stock disponible de la oferta dividiendo el stock por las unidades de la oferta
+	const price = Math.ceil((productRef.costo * product.unidades + (productRef.costo * product.unidades * product.porcentaje) / 100) / 50) * 50; // Calcula el precio redondeado basado en costo y porcentaje multiplicado por las unidades de la oferta
 
 	const handleAdd = () => {
 		if (quantity < stockAvailable) {
@@ -54,8 +53,8 @@ export default function RecipeReviewCard({ producto }) {
 	const handleAgregar = () => {
 		if (quantity > 0) {
 			const productoAgregar = {
-				ID: producto.ID,
-				nombre: producto.nombre,
+				ID: product.ID,
+				nombre: product.nombre,
 				precio: price,
 				cantidad: quantity,
 				stock: stockAvailable,
@@ -79,10 +78,10 @@ export default function RecipeReviewCard({ producto }) {
 
 	return (
 		<Card className='Card'>
-			<CardHeader title={producto.nombre} action={`$${price}`} />
-			<CardMedia component='img' height='194' image={producto.img} alt={`Imagen de ${producto.nombre}`} />
+			<CardHeader title={product.nombre} action={`$${price}`} />
+			<CardMedia component='img' height='194' image={product.img} alt={`Imagen de ${product.nombre}`} />
 			<CardContent>
-				<Typography className='Descripcion'>{producto.descripcion1}</Typography>
+				<Typography className='Descripcion'>{product.descripcion1}</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
 				{stockAvailable > 0 ? (

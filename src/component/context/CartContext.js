@@ -19,12 +19,20 @@ export const CartProvider = ({ children }) => {
 	}, [cartItems]); // Sincronizar el carrito con localStorage cada vez que cambie cartItems
 
 	const addToCart = (item) => {
-		const existingItem = cartItems.find((i) => i.ID === item.ID);
-		if (existingItem) {
-			setCartItems((prevItems) => prevItems.map((i) => (i.ID === item.ID ? { ...i, quantity: i.quantity + 1 } : i)));
-		} else {
-			setCartItems((prevItems) => [...prevItems, { ...item, quantity: 1 }]);
-		}
+		setCartItems((prevItems) => {
+			const existingItem = prevItems.find((i) => i.ID === item.ID);
+			if (existingItem) {
+				if (existingItem.cantidad < item.stock) {
+					// Verificar que la cantidad actual no supere el stock disponible
+					return prevItems.map((i) => (i.ID === item.ID ? { ...i, cantidad: i.cantidad + 1 } : i));
+				} else {
+					return prevItems; // Si ya alcanzó el stock, retorna el estado anterior sin cambios
+				}
+			} else {
+				// Agregar el producto si no existe en el carrito
+				return [...prevItems, { ...item }];
+			}
+		});
 	}; // Agregar un producto al carrito
 
 	const removeFromCart = (itemId) => {
@@ -36,19 +44,29 @@ export const CartProvider = ({ children }) => {
 	}; // Vaciar el carrito
 
 	const increaseQuantity = (itemId) => {
-		setCartItems((prevItems) => prevItems.map((item) => (item.ID === itemId && item.quantity < item.stock ? { ...item, quantity: item.quantity + 1 } : item)));
+		setCartItems((prevItems) => prevItems.map((item) => (item.ID === itemId && item.cantidad < item.stock ? { ...item, cantidad: item.cantidad + 1 } : item)));
 	}; // Incrementar la cantidad de un producto en el carrito
 
 	const decreaseQuantity = (itemId) => {
-		setCartItems((prevItems) => prevItems.map((item) => (item.ID === itemId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item)).filter((item) => item.quantity > 0));
+		setCartItems(
+			(prevItems) =>
+				prevItems
+					.map((item) => {
+						if (item.ID === itemId && item.cantidad > 0) {
+							return { ...item, cantidad: item.cantidad - 1 };
+						}
+						return item; // Devuelve el mismo objeto si no cumple la condición
+					})
+					.filter((item) => item.cantidad > 0) // Elimina los productos con cantidad 0
+		);
 	}; // Disminuir la cantidad de un producto en el carrito y eliminarlo si llega a 0
 
 	const quantity = () => {
-		return cartItems.reduce((total, item) => total + item.quantity, 0);
+		return cartItems.reduce((total, item) => total + item.cantidad, 0);
 	}; // Obtener el total de productos en el carrito
 
 	const totalPrice = () => {
-		return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+		return cartItems.reduce((total, item) => total + item.precio * item.cantidad, 0);
 	}; // Calcular el precio total del carrito
 
 	return <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity, quantity, totalPrice }}>{children}</CartContext.Provider>;

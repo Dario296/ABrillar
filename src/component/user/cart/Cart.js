@@ -32,13 +32,13 @@ const Cart = () => {
 								<IconButton onClick={() => decreaseQuantity(producto.ID)} aria-label='Disminuir cantidad'>
 									<RemoveIcon />
 								</IconButton>
-								{producto.cantidad}
+								<span>{producto.cantidad}</span>
 								<IconButton onClick={() => increaseQuantity(producto.ID)} aria-label='Aumentar cantidad'>
 									<AddIcon />
 								</IconButton>
 							</td>
-							<td>{producto.precio.toFixed(2)}</td>
-							<td>{(producto.precio * producto.cantidad).toFixed(2)}</td>
+							<td>${producto.precio.toFixed(2)}</td>
+							<td>${(producto.precio * producto.cantidad).toFixed(2)}</td>
 							<td>
 								<IconButton onClick={() => removeFromCart(producto.ID)} aria-label='Eliminar producto'>
 									<DeleteIcon />
@@ -56,7 +56,7 @@ const Cart = () => {
 						<td colSpan={3} style={{ textAlign: 'right' }}>
 							<strong>Precio Total:</strong>
 						</td>
-						<td>{totalPrice().toFixed(2)}</td>
+						<td>${totalPrice()}</td>
 					</tr>
 				</tbody>
 			</Table>
