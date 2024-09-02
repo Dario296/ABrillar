@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import app from '../../config/firebase';
+import app from '../config/firebase';
 
 const db = getFirestore(app);
 

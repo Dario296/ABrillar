@@ -6,7 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import app from '../../config/firebase';
 import { useCartContext } from '../../context/CartContext';
-import FormField from "../../formFields/FormFields";
+import FormField from '../../hooks/FormFields';
 
 const db = getFirestore(app);
 

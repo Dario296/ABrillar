@@ -1,5 +1,5 @@
 import React from 'react';
-import useProductsList from '../productsList/ProductsList';
+import useProductsList from '../../hooks/ProductsList';
 import EditProduct from './EditProduct';
 import { Table } from 'react-bootstrap';
 
@@ -14,7 +14,9 @@ const EditProductsList = () => {
 			<thead>
 				<tr>
 					<th>Nombre</th>
-					<th>Precio</th>
+					<th>costo</th>
+					<th>Porcentaje</th>
+					<th>Precio Final</th>
 					<th>Stock</th>
 					<th>Acciones</th>
 				</tr>
@@ -23,8 +25,10 @@ const EditProductsList = () => {
 				{productsList.map((product) => (
 					<tr key={product.ID}>
 						<td>{product.nombre}</td>
-						<td>${product.precio}</td>
-						<td>{product.stock}</td>
+						<td>{product.costo}</td>
+						<td>{product.porcentaje}</td>
+						<td>{product.costo? Math.ceil(product.costo + (product.costo * (product.porcentaje /100))): null}</td>
+						<td>{product.stock? product.stock : null}</td>
 						<td>
 							<EditProduct id={product.ID} />
 						</td>

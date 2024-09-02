@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, CssBaseline } from '@mui/material';
+import { Box, CssBaseline} from '@mui/material';
 import { Main, DrawerHeader } from './NavBarStyles'; // Componentes estilizados
 import AppHeader from './AppHeader'; // Componente del encabezado
 import NavDrawer from './NavDrawer'; // Componente del Drawer

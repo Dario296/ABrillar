@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Particle from '../user/particles/particles';
-import PersistentDrawerLeft from '../user/navBar/ResponsiveDrawer';
+import NavBar from '../user/navBar/ResponsiveDrawer';
 import HeroSec from '../user/hero/HeroSec';
 import Cart from '../user/cart/Cart';
 import OrderForm from '../user/orderForm/OrderForm';
@@ -15,7 +15,7 @@ const UserRoutes = () => {
 	return (
 		<>
 			<Particle id='particles-js' />
-			<PersistentDrawerLeft />
+			<NavBar />
 			<Routes>
 				{quantity() > 0 && (
 					<>
