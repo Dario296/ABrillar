@@ -3,10 +3,12 @@ import { Drawer, List, ListItem, ListItemButton, ListItemText, IconButton } from
 import CloseIcon from '@mui/icons-material/Close';
 import { DrawerHeader } from './NavBarStyles';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AdminContext';
 
 const drawerWidth = 240;
 
 const NavDrawer = ({ open, handleDrawerClose }) => {
+	const { logout } = useAuth();
 	return (
 		<Drawer
 			sx={{
@@ -34,6 +36,11 @@ const NavDrawer = ({ open, handleDrawerClose }) => {
 						</ListItemButton>
 					</ListItem>
 				))}
+				<ListItem disablePadding>
+					<ListItemButton onClick={() => {handleDrawerClose(); logout()}}>
+						<ListItemText>Salir</ListItemText>
+					</ListItemButton>
+				</ListItem>
 			</List>
 		</Drawer>
 	);

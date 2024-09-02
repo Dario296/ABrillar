@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Typography } from '@mui/material';
+import { CircularProgress} from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 import app from '../../config/firebase';
 import RecipeReviewCard from '../card/Card';
 import RecipeReviewCardOffers from '../card/CardOffers';
+import Swal from "sweetalert2";
 
 const db = getFirestore(app);
 
@@ -13,7 +14,6 @@ const ProductsListContainer = () => {
 	const { categoria } = useParams();
 	const [productsList, setProductsList] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -25,7 +25,10 @@ const ProductsListContainer = () => {
 				products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordena productos por nombre
 				setProductsList(products);
 			} catch (err) {
-				setError('Error al cargar los productos.');
+				Swal.fire({
+					icon: 'error',
+					text: 'Error al cargar los productos.',
+				});
 			} finally {
 				setLoading(false);
 			}
@@ -43,16 +46,6 @@ const ProductsListContainer = () => {
 			</Grid>
 		);
 	} // Muestra indicador de carga mientras se cargan los productos
-
-	if (error) {
-		return (
-			<Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
-				<Typography variant='h6' color='error'>
-					{error}
-				</Typography>
-			</Grid>
-		);
-	} // Muestra un mensaje de error en caso de que algo falle
 
 	return (
 		<Grid container spacing={4} direction='row' justifyContent='space-around' alignItems='center'>

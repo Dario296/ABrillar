@@ -2,12 +2,20 @@ import React from 'react';
 import useProductsList from '../../hooks/ProductsList';
 import EditProduct from './EditProduct';
 import { Table } from 'react-bootstrap';
+import { CircularProgress} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 
 const EditProductsList = () => {
-	const { productsList, loading, error } = useProductsList();
+	const { productsList, loading } = useProductsList();
+	productsList.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordena productos por nombre
 
-	if (loading) return <div>Cargando productos...</div>;
-	if (error) return <div>{error}</div>;
+	if (loading) {
+		return (
+			<Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
+				<CircularProgress />
+			</Grid>
+		);
+	} // Muestra indicador de carga mientras se cargan los productos
 
 	return (
 		<Table striped bordered hover size="sm" responsive>

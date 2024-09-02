@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import app from '../config/firebase';
+import Swal from "sweetalert2";
 
 const db = getFirestore(app);
 
 const useProductsList = () => {
 	const [productsList, setProductsList] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -18,7 +18,10 @@ const useProductsList = () => {
 				products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar productos por nombre
 				setProductsList(products);
 			} catch (err) {
-				setError('Error al cargar los productos.');
+				Swal.fire({
+					icon: 'error',
+					text: 'Error al cargar los productos.',
+				});
 			} finally {
 				setLoading(false);
 			}
@@ -27,7 +30,7 @@ const useProductsList = () => {
 		fetchProducts();
 	}, []);
 
-	return { productsList, loading, error };
+	return { productsList, loading };
 };
 
 export default useProductsList;

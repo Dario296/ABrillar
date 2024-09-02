@@ -1,11 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Badge } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AdminContext';
+import { useCartAdminContext } from '../../context/CartAdminContext';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const AppHeader = ({ open, handleDrawerOpen }) => {
-	const { logout } = useAuth();
+	const { quantity } = useCartAdminContext();
 
 	return (
 		<AppBar className='NavBar' position='fixed' open={open}>
@@ -16,8 +17,10 @@ const AppHeader = ({ open, handleDrawerOpen }) => {
 				<Typography variant='h6' noWrap component={Link} to='/' onClick={handleDrawerOpen}>
 					***ABrillar***
 				</Typography>
-				<IconButton color='inherit' onClick={logout}>
-					Salir
+				<IconButton color='inherit' component={Link} to='/carrito'>
+					<Badge badgeContent={quantity()}>
+						<ShoppingCartIcon />
+					</Badge>
 				</IconButton>
 			</Toolbar>
 		</AppBar>

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography, CircularProgress } from '@mui/material';
+import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { useCartContext } from '../../context/CartContext';
 import app from '../../config/firebase';
+import Swal from "sweetalert2";
 
 const db = getFirestore(app);
 
 export default function RecipeReviewCard({ product }) {
 	const [productRef, setProductRef] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 	const [quantity, setQuantity] = useState(0);
 	const { addToCart } = useCartContext();
 
@@ -22,13 +21,12 @@ export default function RecipeReviewCard({ product }) {
 				const productDoc = await getDoc(doc(db, 'ListadoProductos', product.referencia));
 				if (productDoc.exists()) {
 					setProductRef(productDoc.data());
-				} else {
-					setError('Producto no encontrado');
 				}
 			} catch (err) {
-				setError('Error al cargar los datos del producto');
-			} finally {
-				setLoading(false);
+				Swal.fire({
+					icon: 'error',
+					text: 'Error al cargar los datos del producto.',
+				});
 			}
 		};
 
@@ -63,18 +61,6 @@ export default function RecipeReviewCard({ product }) {
 			setQuantity(0); // Reiniciar la cantidad después de agregar
 		}
 	}; // Añade el producto al carrito y reinicia la cantidad
-
-	if (loading) {
-		return <CircularProgress />;
-	} // Muestra indicador de carga mientras se cargan el producto
-
-	if (error) {
-		return <Typography color='error'>{error}</Typography>;
-	} // Muestra un mensaje de error en caso de que algo falle
-
-	if (!productRef) {
-		return null;
-	} // Muestra un mensaje de error en caso de que algo falle
 
 	return (
 		<Card className='Card'>
