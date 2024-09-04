@@ -29,42 +29,42 @@ const Cart = () => {
 						<tr key={producto.ID}>
 							<td>{producto.nombre}</td>
 							<td>
-								<IconButton onClick={() => decreaseQuantity(producto.ID)} aria-label='Disminuir cantidad'>
+								<IconButton onClick={() => decreaseQuantity(producto.ID)}>
 									<RemoveIcon />
 								</IconButton>
 								<span>{producto.cantidad}</span>
-								<IconButton onClick={() => increaseQuantity(producto.ID)} aria-label='Aumentar cantidad'>
+								<IconButton onClick={() => increaseQuantity(producto.ID)}>
 									<AddIcon />
 								</IconButton>
 							</td>
-							<td>${producto.precio.toFixed(2)}</td>
-							<td>${(producto.precio * producto.cantidad).toFixed(2)}</td>
+							<td>${producto.precio}</td>
+							<td>${(producto.precio * producto.cantidad)}</td>
 							<td>
-								<IconButton onClick={() => removeFromCart(producto.ID)} aria-label='Eliminar producto'>
+								<IconButton onClick={() => removeFromCart(producto.ID)}>
 									<DeleteIcon />
 								</IconButton>
 							</td>
 						</tr>
 					))}
 					<tr>
-						<td colSpan={3} style={{ textAlign: 'right' }}>
+						<td >
 							<strong>Total Productos:</strong>
 						</td>
-						<td>{quantity()}</td>
+						<td colSpan={4}>{quantity()}</td>
 					</tr>
 					<tr>
-						<td colSpan={3} style={{ textAlign: 'right' }}>
+						<td colSpan={3}>
 							<strong>Precio Total:</strong>
 						</td>
-						<td>${totalPrice()}</td>
+						<td colSpan={2}>${totalPrice()}</td>
 					</tr>
 				</tbody>
 			</Table>
 			<div className='Cart'>
-				<Button variant='contained' color='secondary' onClick={clearCart}>
+				<Button onClick={clearCart}>
 					Vaciar carrito
 				</Button>
-				<Button variant='contained' color='primary' component={Link} to='/realizarpedido'>
+				<Button component={Link} to='/realizarpedido'>
 					Terminar pedido
 				</Button>
 			</div>

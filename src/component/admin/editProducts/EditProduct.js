@@ -4,6 +4,7 @@ import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import app from '../../config/firebase';
 import { useForm, FormProvider } from 'react-hook-form';
 import FormFieldsByCategory from '../../hooks/FormFieldsByCategory';
+import EditIcon from '@mui/icons-material/Edit';
 
 const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 };
 
@@ -53,10 +54,10 @@ const EditProduct = ({ id }) => {
 
 	return (
 		<div>
-			<Button onClick={handleOpen} variant='contained' color='primary'>
-				Editar producto
+			<Button onClick={handleOpen}>
+				<EditIcon/>
 			</Button>
-			<Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+			<Modal open={open} onClose={handleClose}>
 				<Box sx={style}>
 					<FormProvider {...methods}>
 						<div>
@@ -64,10 +65,10 @@ const EditProduct = ({ id }) => {
 							<form onSubmit={handleSubmit(onSubmit)}>
 								<FormFieldsByCategory categoria={categoria} />
 
-								<Button type='submit' variant='contained' color='primary'>
+								<Button type='submit'>
 									Guardar
 								</Button>
-								<Button type='buton' variant='contained' onClick={handleClose}>
+								<Button type='buton' onClick={handleClose}>
 									Salir
 								</Button>
 							</form>

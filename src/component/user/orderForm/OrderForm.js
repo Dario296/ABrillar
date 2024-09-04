@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { useForm, FormProvider } from 'react-hook-form';
 import Swal from 'sweetalert2';
@@ -27,11 +26,11 @@ const OrderForm = () => {
 			const orderRef = collection(db, 'Pedidos');
 			await addDoc(orderRef, order);
 			// Crear mensaje para WhatsApp
-			let productos = cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio.toFixed(2)}`).join(', ');
+			let productos = cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio}`).join(', ');
 			let cliente = `Nombre: ${data.nombre}, Dirección: ${data.direccion}, Teléfono: ${data.telefono}, Forma de pago: ${data.formaDePago}`;
-			let mensaje = `${productos}. Total: $${total.toFixed(2)}. ${cliente}`;
+			let mensaje = `${productos}. Total: $${total}. ${cliente}`;
 			// Enviar mensaje a WhatsApp
-			window.location.href = `https://api.whatsapp.com/send?phone=5493512591067&text=${encodeURIComponent(mensaje)}`;
+			window.open(`https://api.whatsapp.com/send?phone=5493512591067&text=${encodeURIComponent(mensaje)}`, '_blank');
 			// Limpiar carrito y formulario
 			clearCart();
 		} catch (error) {
@@ -45,33 +44,18 @@ const OrderForm = () => {
 	return (
 		<FormProvider {...methods}>
 			<form className='formularioPedido' onSubmit={handleSubmit(onSubmit)}>
-				<Grid container spacing={3}>
-					<Grid item xs={12} sm={6}>
-						<FormField name='nombre' label='NOMBRE' type='text' required />
-					</Grid>
-
-					<Grid item xs={12} sm={6}>
-						<FormField name='direccion' label='DIRECCION' type='text' required />
-					</Grid>
-
-					<Grid item xs={12} sm={6}>
-						<FormField name='telefono' label='TELEFONO' type='tel' required />
-					</Grid>
-
-					<Grid item xs={12} sm={6}>
-						<FormControl fullWidth margin='normal'>
-							<label>Forma de Pago</label>
-							<Select {...register('formaDePago', { required: { value: true, message: 'Debe selecionar una forma de pago' } })}>
-								<MenuItem value='Efectivo'>Efectivo</MenuItem>
-								<MenuItem value='Transferencia bancaria'>Transferencia bancaria</MenuItem>
-							</Select>
-							{methods.formState.errors.formaDePago && <FormHelperText error>{methods.formState.errors.formaDePago.message}</FormHelperText>}
-						</FormControl>
-					</Grid>
-				</Grid>
-				<Button type='submit' variant='contained' color='primary'>
-					Confirmar Pedido
-				</Button>
+				<FormField name='nombre' label='NOMBRE' type='text' required />
+				<FormField name='direccion' label='DIRECCION' type='text' required />
+				<FormField name='telefono' label='TELEFONO' type='tel' required />
+				<FormControl fullWidth margin='normal'>
+					<InputLabel>Forma de Pago</InputLabel>
+					<Select {...register('formaDePago', { required: { value: true, message: 'Debe selecionar una forma de pago' } })}>
+						<MenuItem value='Efectivo'>Efectivo</MenuItem>
+						<MenuItem value='Transferencia bancaria'>Transferencia bancaria</MenuItem>
+					</Select>
+					{methods.formState.errors.formaDePago && <FormHelperText error>{methods.formState.errors.formaDePago.message}</FormHelperText>}
+				</FormControl>
+				<Button type='submit'>Confirmar Pedido</Button>
 			</form>
 		</FormProvider>
 	);

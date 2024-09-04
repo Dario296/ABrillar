@@ -1,19 +1,21 @@
 import { createContext, useContext, useState } from 'react';
+import { getFirestore, collection, query, where, documentId, writeBatch, addDoc, getDocs } from 'firebase/firestore';
+import app from '../config/firebase';
+import Swal from "sweetalert2";
 
 const CartContextAdmin = createContext();
+const db = getFirestore(app);
 
 export const CartAdminProvider = ({ children }) => {
 	const [cartItems, setCartItems] = useState([]);
-	console.log(cartItems);
+	const [ventaEnProceso, setVentaEnProceso] = useState(false);
 
 	const addToCart = (item) => {
 		setCartItems((prevItems) => {
 			const existingItem = prevItems.find((i) => i.ID === item.ID);
 			if (existingItem) {
-				// Si el producto ya está en el carrito, reemplaza la cantidad con la nueva cantidad seleccionada
 				return prevItems.map((i) => (i.ID === item.ID ? { ...i, cantidad: item.cantidad } : i));
 			} else {
-				// Agregar el producto si no existe en el carrito
 				return [...prevItems, { ...item }];
 			}
 		});
@@ -32,20 +34,48 @@ export const CartAdminProvider = ({ children }) => {
 	};
 
 	const totalPrice = () => {
-		return cartItems.reduce((total, item) => total + item.precio * item.cantidad, 0);
+		return cartItems.reduce((total, item) => total + item.precio, 0);
+	};
+
+	const confirmarVenta = async () => {
+		setVentaEnProceso(true);
+		try {
+			const batch = writeBatch(db);
+			const ventaRef = collection(db, 'Ventas');
+			const productos = await getDocs(
+				query(
+					collection(db, 'ListadoProductos'),
+					where(
+						documentId(),
+						'in',
+						cartItems.map((item) => item.IDRef || item.ID)
+					)
+				)
+			);
+
+			productos.forEach((doc) => {
+				const item = cartItems.find(({ IDRef, ID }) => (IDRef || ID) === doc.id);
+				const cantidad = item.IDRef ? item.cantidad * item.unidades : item.cantidad;
+				batch.update(doc.ref, { stock: doc.data().stock - cantidad });
+			});
+
+			await batch.commit();
+			await addDoc(ventaRef, { fecha: new Date().toLocaleDateString(), hora: new Date().toLocaleTimeString(), items: cartItems, total: totalPrice() });
+
+			clearCart();
+			window.location.reload();
+		} catch (error) {
+			Swal.fire({
+				icon: 'error',
+				text: 'Hubo un problema al confirmar la venta. Inténtelo nuevamente.',
+			});
+		} finally {
+			setVentaEnProceso(false);
+		}
 	};
 
 	return (
-		<CartContextAdmin.Provider
-			value={{
-				cartItems,
-				addToCart,
-				removeFromCart,
-				clearCart,
-				quantity,
-				totalPrice,
-			}}
-		>
+		<CartContextAdmin.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, quantity, totalPrice, confirmarVenta, ventaEnProceso, }}>
 			{children}
 		</CartContextAdmin.Provider>
 	);

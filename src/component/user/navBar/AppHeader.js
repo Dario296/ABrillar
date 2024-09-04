@@ -14,7 +14,7 @@ const AppHeader = ({ open, handleDrawerOpen }) => {
 				<IconButton color='inherit' aria-label='open drawer' onClick={handleDrawerOpen} edge='start' sx={{ mr: 2, ...(open && { display: 'none' }) }}>
 					<MenuIcon />
 				</IconButton>
-				<Typography variant='h6' noWrap component={Link} to='/' onClick={handleDrawerOpen}>
+				<Typography variant='h6' noWrap component={Link} to='/'>
 					***ABrillar***
 				</Typography>
 				<div>

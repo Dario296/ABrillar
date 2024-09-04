@@ -15,7 +15,7 @@ const Login = () => {
 			<form className='formularioLogin' onSubmit={handleSubmit(onSubmit)}>
 				<FormField name='name' label='NOMBRE' type='text' required />
 				<FormField name='password' label='CONTRASEÑA' type='password' required />
-				<Button type='submit' variant='contained' color='primary'>
+				<Button type='submit'>
 					Iniciar
 				</Button>
 			</form>

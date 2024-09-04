@@ -4,6 +4,7 @@ import EditProduct from './EditProduct';
 import { Table } from 'react-bootstrap';
 import { CircularProgress} from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import DeleteProduct from "./DeleteProduct";
 
 const EditProductsList = () => {
 	const { productsList, loading } = useProductsList();
@@ -26,7 +27,7 @@ const EditProductsList = () => {
 					<th>Porcentaje</th>
 					<th>Precio Final</th>
 					<th>Stock</th>
-					<th>Acciones</th>
+					<th colSpan={2}>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,10 +36,13 @@ const EditProductsList = () => {
 						<td>{product.nombre}</td>
 						<td>{product.costo}</td>
 						<td>{product.porcentaje}</td>
-						<td>{product.costo? Math.ceil(product.costo + (product.costo * (product.porcentaje /100))): null}</td>
+						<td>{product.costo? Math.ceil((product.costo + (product.costo * product.porcentaje)/100)/50)*50: null}</td>
 						<td>{product.stock? product.stock : null}</td>
 						<td>
 							<EditProduct id={product.ID} />
+						</td>
+						<td>
+							<DeleteProduct id={product.ID}/>
 						</td>
 					</tr>
 				))}

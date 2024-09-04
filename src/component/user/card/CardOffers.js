@@ -6,7 +6,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { useCartContext } from '../../context/CartContext';
 import app from '../../config/firebase';
-import Swal from "sweetalert2";
 
 const db = getFirestore(app);
 
@@ -19,15 +18,8 @@ export default function RecipeReviewCard({ product }) {
 		const fetchProductRef = async () => {
 			try {
 				const productDoc = await getDoc(doc(db, 'ListadoProductos', product.referencia));
-				if (productDoc.exists()) {
-					setProductRef(productDoc.data());
-				}
-			} catch (err) {
-				Swal.fire({
-					icon: 'error',
-					text: 'Error al cargar los datos del producto.',
-				});
-			}
+				setProductRef(productDoc.data());
+			} catch (err) {}
 		};
 
 		fetchProductRef();

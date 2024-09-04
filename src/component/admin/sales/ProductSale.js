@@ -8,8 +8,8 @@ import { useCartAdminContext } from '../../context/CartAdminContext';
 const db = getFirestore(app);
 
 const ProductSale = ({ product }) => {
-	const [quantity, setQuantity] = useState(null);
-	const [quantityMoney, setQuantityMoney] = useState(null);
+	const [quantity, setQuantity] = useState('');
+	const [quantityMoney, setQuantityMoney] = useState('');
 	const [productRef, setProductRef] = useState([]);
 	const { addToCart } = useCartAdminContext();
 
@@ -30,23 +30,25 @@ const ProductSale = ({ product }) => {
 
 	const handleChangeQuantity = (e) => {
 		const value = Number(e.target.value);
-		setQuantity(value);
-		setQuantityMoney(value * price);
+		const roundedQuantity = parseFloat(value.toFixed(2)); // Redondea a dos decimales
+		setQuantity(roundedQuantity);
+		setQuantityMoney(parseFloat((roundedQuantity * price).toFixed(2))); // Redondea a dos decimales
 	}; // Manejar el cambio en cantidad
 
 	const handleChangeQuantityMoney = (e) => {
 		const value = Number(e.target.value);
-		const result = (value / price).toFixed(2);
+		const result = parseFloat((value / price).toFixed(2)); // Redondea a dos decimales
 		setQuantity(result);
-		setQuantityMoney(value);
+		setQuantityMoney(parseFloat(value.toFixed(2))); // Redondea a dos decimales
 	}; // Manejar el cambio en cantidad de dinero
 
 	const productSale = {
 		ID: product.ID,
 		nombre: product.nombre,
 		cantidad: quantity,
-		precioTotal: quantityMoney,
+		precio: quantityMoney,
 		IDRef: product.referencia || null,
+		unidades: product.unidades || null,
 	}; // Crear objeto productSale para agregar al carrito
 
 	const isAgregarDisabled = () => {
@@ -64,7 +66,15 @@ const ProductSale = ({ product }) => {
 			<td>
 				<input className='inputVentas' onChange={handleChangeQuantityMoney} type='number' name='precio' value={quantityMoney} disabled={product.categoria === 'ofertas'} />
 			</td>
-			<Button className={isAgregarDisabled() ? 'agregarVentasD' : 'agregarVentas'} onClick={() => addToCart(productSale)} disabled={isAgregarDisabled()}>
+			<Button
+				className={isAgregarDisabled() ? 'agregarVentasD' : 'agregarVentas'}
+				onClick={() => {
+					addToCart(productSale);
+					setQuantity('');
+					setQuantityMoney('');
+				}}
+				disabled={isAgregarDisabled()}
+			>
 				<AddShoppingCartIcon />
 			</Button>
 		</tr>

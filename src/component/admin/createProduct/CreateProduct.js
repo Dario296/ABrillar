@@ -19,9 +19,18 @@ const CreateProduct = () => {
     const categoria = watch('categoria');
 
     const onSubmit = async (data) => {
+        const { categoria, descripcion1, nombre, porcentaje, referencia, unidades, costo, stock } = data;
+
+		const product = {
+			categoria,
+			descripcion1,
+			nombre,
+			porcentaje: Number(porcentaje),
+			...(categoria === 'ofertas' ? { referencia, unidades: Number(unidades) } : { costo: Number(costo), stock: Number(stock) }),
+		};
         try {
             const ProductosRef = collection(db, 'ListadoProductos');
-            const docRef = await addDoc(ProductosRef, data);
+            const docRef = await addDoc(ProductosRef, product);
             setMessage(`Producto guardado con éxito. ID: ${docRef.id}`);
             reset();
         } catch (error) {
@@ -34,9 +43,9 @@ const CreateProduct = () => {
             <Box sx={{ p: 2 }}>
                 {message && <h3>{message}</h3>}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <FormControl fullWidth margin='normal'>
-                        <InputLabel id='select-label'>Categoría</InputLabel>
-                        <Select labelId='select-label' defaultValue='' {...methods.register('categoria', { required: 'Debe seleccionar una categoría' })}>
+                    <FormControl fullWidth>
+                        <InputLabel>Categoría</InputLabel>
+                        <Select {...methods.register('categoria', { required: 'Debe seleccionar una categoría' })}>
                             {categories.map(cat => (
                                 <MenuItem key={cat} value={cat}>
                                     {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -48,7 +57,7 @@ const CreateProduct = () => {
 
                     <FormFieldsByCategory categoria={categoria} />
 
-                    <Button type='submit' variant='contained' color='primary'>
+                    <Button type='submit'>
                         Guardar
                     </Button>
                 </form>
