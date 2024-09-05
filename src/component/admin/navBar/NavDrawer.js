@@ -29,7 +29,12 @@ const NavDrawer = ({ open, handleDrawerClose }) => {
 				</IconButton>
 			</DrawerHeader>
 			<List>
-				{[/*'Ventas', 'Fiados', 'Ventas Del Dia', 'Lista de Fiados', 'Total del mes',*/ 'Editar productos', 'Crear producto'].map((text, index) => (
+				<ListItem disablePadding>
+					<ListItemButton as={Link} to={`/`} onClick={handleDrawerClose}>
+						<ListItemText>Ventas</ListItemText>
+					</ListItemButton>
+				</ListItem>
+				{[ 'Ventas Del Dia', 'Fiados', 'Lista de Fiados', 'Total del mes', 'Editar productos', 'Crear producto'].map((text, index) => (
 					<ListItem key={text} disablePadding>
 						<ListItemButton as={Link} to={`/${text.toLowerCase().replace(/\s/g, '')}`} onClick={handleDrawerClose}>
 							<ListItemText>{text}</ListItemText>
@@ -37,7 +42,12 @@ const NavDrawer = ({ open, handleDrawerClose }) => {
 					</ListItem>
 				))}
 				<ListItem disablePadding>
-					<ListItemButton onClick={() => {handleDrawerClose(); logout()}}>
+					<ListItemButton
+						onClick={() => {
+							handleDrawerClose();
+							logout();
+						}}
+					>
 						<ListItemText>Salir</ListItemText>
 					</ListItemButton>
 				</ListItem>

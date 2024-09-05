@@ -2,10 +2,10 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import Cart from "../cart/Cart";
+import Cart from '../cart/Cart';
+import OCCart from '../cartOnCredit/Cart';
 
 const AppHeader = ({ open, handleDrawerOpen }) => {
-
 	return (
 		<AppBar className='NavBar' position='fixed' open={open}>
 			<Toolbar className='Flex'>
@@ -15,7 +15,10 @@ const AppHeader = ({ open, handleDrawerOpen }) => {
 				<Typography variant='h6' noWrap component={Link} to='/'>
 					***ABrillar***
 				</Typography>
-				<Cart/>
+				<div>
+					<Cart />
+					<OCCart />
+				</div>
 			</Toolbar>
 		</AppBar>
 	);

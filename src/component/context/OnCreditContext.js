@@ -3,10 +3,10 @@ import { getFirestore, collection, query, where, documentId, writeBatch, addDoc,
 import app from '../config/firebase';
 import Swal from 'sweetalert2';
 
-const CartContextAdmin = createContext();
+const OnCreditContext = createContext();
 const db = getFirestore(app);
 
-export const CartAdminProvider = ({ children }) => {
+export const OnCreditProvider = ({ children }) => {
 	const [cartItems, setCartItems] = useState([]);
 	const [saleInProcess, setSaleInProcess] = useState(false);
 
@@ -37,11 +37,11 @@ export const CartAdminProvider = ({ children }) => {
 		return cartItems.reduce((total, item) => total + item.precio, 0);
 	};
 
-	const confirmSale = async () => {
+	const confirmSale = async (name) => {
 		setSaleInProcess(true);
 		try {
 			const batch = writeBatch(db);
-			const ventaRef = collection(db, 'Ventas');
+			const ventaRef = collection(db, 'Fiados');
 			const productos = await getDocs(
 				query(
 					collection(db, 'ListadoProductos'),
@@ -60,7 +60,7 @@ export const CartAdminProvider = ({ children }) => {
 			});
 
 			await batch.commit();
-			await addDoc(ventaRef, { fecha: new Date().toLocaleDateString(), hora: new Date().toLocaleTimeString(), items: cartItems, total: totalPrice() });
+			await addDoc(ventaRef, { fecha: new Date().toLocaleDateString(), hora: new Date().toLocaleTimeString(), items: cartItems, total: totalPrice(), nombre: name });
 
 			clearCart();
 			window.location.reload();
@@ -74,9 +74,9 @@ export const CartAdminProvider = ({ children }) => {
 		}
 	};
 
-	return <CartContextAdmin.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, quantity, totalPrice, confirmSale, saleInProcess }}>{children}</CartContextAdmin.Provider>;
+	return <OnCreditContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, quantity, totalPrice, confirmSale, saleInProcess }}>{children}</OnCreditContext.Provider>;
 };
 
-export const useCartAdminContext = () => {
-	return useContext(CartContextAdmin);
+export const useOnCreditContext = () => {
+	return useContext(OnCreditContext);
 };
