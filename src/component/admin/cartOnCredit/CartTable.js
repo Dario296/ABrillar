@@ -21,7 +21,7 @@ const CartTable = ({ cartItems, handleRemoveFromCart, quantity, totalPrice }) =>
 						<td>{producto.cantidad}</td>
 						<td>${producto.precio}</td>
 						<td>
-							<IconButton onClick={() => handleRemoveFromCart(producto.ID)}>
+							<IconButton className="Eliminar" onClick={() => handleRemoveFromCart(producto.ID)}>
 								<DeleteIcon />
 							</IconButton>
 						</td>

@@ -19,12 +19,12 @@ const EditProductsList = () => {
 	} // Muestra indicador de carga mientras se cargan los productos
 
 	return (
-		<Table striped bordered hover size="sm" responsive>
+		<Table striped bordered hover size="sm" responsive className="text-center">
 			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>costo</th>
-					<th>Porcentaje</th>
+					<th>%</th>
 					<th>Precio Final</th>
 					<th>Stock</th>
 					<th colSpan={2}>Acciones</th>

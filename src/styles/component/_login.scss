@@ -1,9 +1,12 @@
-.formularioLogin{
+@use '../utils/shared' as *;
+.FormularioLogin{
     margin-left: 25%;
     width: 50%;
     display: grid;
     place-items: center;
-    .controles{
-        margin-top: 20px;
-    }
+}
+.Ingresar{
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
 }

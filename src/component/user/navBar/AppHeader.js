@@ -20,7 +20,7 @@ const AppHeader = ({ open, handleDrawerOpen }) => {
 				<div>
 					{quantity() > 0 && (
 						<IconButton color='inherit' component={Link} to='/carrito'>
-							<Badge badgeContent={quantity()}>
+							<Badge badgeContent={quantity()}  color="secondary">
 								<ShoppingCartIcon />
 							</Badge>
 						</IconButton>

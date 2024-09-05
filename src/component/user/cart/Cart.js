@@ -19,9 +19,9 @@ const Cart = () => {
 					<tr>
 						<th>Nombre</th>
 						<th>Cantidad</th>
-						<th>Precio C/U</th>
+						<th>$ C/U</th>
 						<th>Total</th>
-						<th>Acciones</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,18 +29,18 @@ const Cart = () => {
 						<tr key={producto.ID}>
 							<td>{producto.nombre}</td>
 							<td>
-								<IconButton onClick={() => decreaseQuantity(producto.ID)}>
+								<IconButton className="Restar" onClick={() => decreaseQuantity(producto.ID)}>
 									<RemoveIcon />
 								</IconButton>
 								<span>{producto.cantidad}</span>
-								<IconButton onClick={() => increaseQuantity(producto.ID)}>
+								<IconButton className="Sumar" onClick={() => increaseQuantity(producto.ID)}>
 									<AddIcon />
 								</IconButton>
 							</td>
 							<td>${producto.precio}</td>
 							<td>${(producto.precio * producto.cantidad)}</td>
 							<td>
-								<IconButton onClick={() => removeFromCart(producto.ID)}>
+								<IconButton className="Eliminar" onClick={() => removeFromCart(producto.ID)}>
 									<DeleteIcon />
 								</IconButton>
 							</td>
@@ -48,7 +48,7 @@ const Cart = () => {
 					))}
 					<tr>
 						<td >
-							<strong>Total Productos:</strong>
+							<strong>T.Productos:</strong>
 						</td>
 						<td colSpan={4}>{quantity()}</td>
 					</tr>
@@ -61,11 +61,11 @@ const Cart = () => {
 				</tbody>
 			</Table>
 			<div className='Cart'>
-				<Button onClick={clearCart}>
-					Vaciar carrito
-				</Button>
-				<Button component={Link} to='/realizarpedido'>
+				<Button className="ConfirmaPedido" component={Link} to='/realizarpedido'>
 					Terminar pedido
+				</Button>
+				<Button className="VaciarCarrito" onClick={clearCart}>
+					Vaciar carrito
 				</Button>
 			</div>
 		</div>

@@ -4,22 +4,19 @@
     background-color: transparent !important;
     border: 4px solid $primary-color;
     width: 300px;
-    .Restar{
-        color: $tertiary-color;
-    }
-    .Cantidad{
-        color: $tertiary-color;
-    }
-    .Sumar{
-        color: $tertiary-color;
-    }
-    .Añadir{
-        color: $tertiary-color;
-    }
-    .Descripcion{
-        color: $tertiary-color !important;
-    }
-    .VerMas{
-        color: $tertiary-color;
-    }
+}
+.Restar{
+    color: $fourth-color !important;
+    border: none !important;
+}
+.Sumar{
+    color: $primary-color !important;
+    border: none !important;
+}
+.Añadir{
+    margin-left:30% !important;
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
+    border-radius: 10% !important;
 }

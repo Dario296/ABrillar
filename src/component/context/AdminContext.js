@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 		const admin1 = process.env.REACT_APP_ADMIN1;
 		const password = process.env.REACT_APP_PASSWORD;
 		const password1 = process.env.REACT_APP_PASSWORD1;
-		if ((name === admin || name === admin1) && (pass === password || pass === password1)) {
+		if ((name === admin && pass === password) || (name === admin1 && pass === password1)) {
 			localStorage.setItem('admin', true);
 			setIsAuthenticated(true);
 		} // Comparo que las credenciales sean iguales que las variables de entorno presentes.

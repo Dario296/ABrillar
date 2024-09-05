@@ -46,19 +46,19 @@ export default function RecipeReviewCard({ product }) {
 			<CardHeader title={product.nombre} action={`$${price}`} />
 			<CardMedia component='img' height='194' image={product.img} alt={`Imagen de ${product.nombre}`} />
 			<CardContent>
-				<Typography className='Descripcion'>{product.descripcion1}</Typography>
+				<Typography>{product.descripcion1}</Typography>
 			</CardContent>
-			<CardActions disableSpacing>
+			<CardActions>
 				{product.stock > 0 ? (
 					<>
-						<IconButton className='Restar' onClick={handleRemove}>
+						<IconButton className="Restar" onClick={handleRemove}>
 							<RemoveIcon />
 						</IconButton>
-						<Typography className='Cantidad'>{quantity}</Typography>
-						<IconButton className='Sumar' onClick={handleAdd}>
+						<Typography>{quantity}</Typography>
+						<IconButton className="Sumar" onClick={handleAdd}>
 							<AddIcon />
 						</IconButton>
-						<IconButton onClick={handleAgregar} className='Añadir'>
+						<IconButton className="Añadir" onClick={handleAgregar}>
 							<Typography>Añadir</Typography>
 							<AddShoppingCartIcon />
 						</IconButton>

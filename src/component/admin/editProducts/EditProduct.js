@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Box, Modal } from '@mui/material';
+import { Button, Box, Modal, Typography } from '@mui/material';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import app from '../../config/firebase';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -47,6 +47,7 @@ const EditProduct = ({ id }) => {
 			const productRef = doc(db, 'ListadoProductos', id);
 			await updateDoc(productRef, product);
 			setMessage(`Producto modificado con éxito. ID: ${id}`);
+			handleClose();
 		} catch (error) {
 			setMessage('Error al modificar el producto.');
 		}
@@ -76,6 +77,11 @@ const EditProduct = ({ id }) => {
 					</FormProvider>
 				</Box>
 			</Modal>
+			{message && (
+				<Typography variant='subtitle1' color={message.includes('éxito') ? 'green' : 'red'}>
+					{message}
+				</Typography>
+			)}
 		</div>
 	);
 };

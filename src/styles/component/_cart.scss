@@ -4,3 +4,35 @@
     display: grid;
     place-items: center;
 }
+
+.ConfirmaPedido{
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
+}
+
+.VaciarCarrito{
+    background-color: $fourth-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
+}
+
+.Restar{
+    color: $fourth-color !important;
+    border: none !important;
+}
+
+.Sumar{
+    color: $primary-color !important;
+    border: none !important;
+}
+
+.Eliminar{
+    color: $fourth-color !important;
+    border: none !important;
+}
+.EnviarPresupuesto{
+    background-color: rgb(111, 191, 115) !important;
+    color: $tertiary-color !important;
+    border: none !important;
+}

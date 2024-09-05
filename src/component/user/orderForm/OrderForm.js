@@ -43,7 +43,7 @@ const OrderForm = () => {
 
 	return (
 		<FormProvider {...methods}>
-			<form className='formularioPedido' onSubmit={handleSubmit(onSubmit)}>
+			<form className='FormularioPedido' onSubmit={handleSubmit(onSubmit)}>
 				<FormField name='nombre' label='NOMBRE' type='text' required />
 				<FormField name='direccion' label='DIRECCION' type='text' required />
 				<FormField name='telefono' label='TELEFONO' type='tel' required />
@@ -55,7 +55,7 @@ const OrderForm = () => {
 					</Select>
 					{methods.formState.errors.formaDePago && <FormHelperText error>{methods.formState.errors.formaDePago.message}</FormHelperText>}
 				</FormControl>
-				<Button type='submit'>Confirmar Pedido</Button>
+				<Button className="ConfirmaPedido" type='submit'>Confirmar Pedido</Button>
 			</form>
 		</FormProvider>
 	);

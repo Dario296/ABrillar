@@ -1,6 +1,6 @@
 @use '../utils/shared' as *;
 
-.floating-whatsapp--img-container {
+.ImgWpsContainer {
     background-color: #25D366;
     border-radius: 100%;
     bottom: 3rem;
@@ -10,12 +10,12 @@
     right: 3rem;
     transition: all 0.3s ease;
     z-index: 1;
-    &:hover {
-        transform: scale(1.1);
-    }
-    img {
-        width: fit-content;
-        height: fit-content;
-        max-width: 100%;
-    }
+}
+.ImgWpsContainer:hover {
+    transform: scale(1.1);
+}
+.img-wps {
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
 }

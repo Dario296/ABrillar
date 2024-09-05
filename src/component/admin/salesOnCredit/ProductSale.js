@@ -61,10 +61,10 @@ const ProductSale = ({ product }) => {
 			<td>{stockDisponible}</td>
 			<td>{price}</td>
 			<td>
-				<input className='inputVentas' onChange={handleChangeQuantity} type='number' name='cantidad' value={quantity} />
+				<input className='InputVentas' onChange={handleChangeQuantity} type='number' name='cantidad' value={quantity} />
 			</td>
 			<td>
-				<input className='inputVentas' onChange={handleChangeQuantityMoney} type='number' name='precio' value={quantityMoney} disabled={product.categoria === 'ofertas'} />
+				<input className='InputVentas' onChange={handleChangeQuantityMoney} type='number' name='precio' value={quantityMoney} disabled={product.categoria === 'ofertas'} />
 			</td>
 			<Button
 				className={isAgregarDisabled() ? 'agregarVentasD' : 'agregarVentas'}

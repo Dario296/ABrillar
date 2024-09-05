@@ -8,7 +8,7 @@ import FormFieldsByCategory from "../../hooks/FormFieldsByCategory";
 const db = getFirestore(app);
 
 const categories = [
-    'ofertas', 'autos', 'baños', 'bolsas', 'cocina', 'insecticidas',
+    'ofertas', 'autos', 'bolsas', 'cocina', 'insecticidas',
     'otros', 'pisos', 'ropa', 'gato', 'perro'
 ];
 
@@ -46,6 +46,9 @@ const CreateProduct = () => {
                     <FormControl fullWidth>
                         <InputLabel>Categoría</InputLabel>
                         <Select {...methods.register('categoria', { required: 'Debe seleccionar una categoría' })}>
+                            <MenuItem value={"baños"}>
+                                Baños
+                            </MenuItem>
                             {categories.map(cat => (
                                 <MenuItem key={cat} value={cat}>
                                     {cat.charAt(0).toUpperCase() + cat.slice(1)}
