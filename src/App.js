@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import './styles/styles.scss';
 import { useAuth } from './component/context/AdminContext';
 import AdminRoutes from './component/routes/AdminRoutes';
@@ -9,7 +9,7 @@ function App() {
 
 	return (
 		<div>
-			<BrowserRouter>{isAuthenticated ? <AdminRoutes /> : <UserRoutes />}</BrowserRouter>
+			<HashRouter>{isAuthenticated ? <AdminRoutes /> : <UserRoutes />}</HashRouter>
 		</div>
 	);
 }

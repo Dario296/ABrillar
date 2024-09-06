@@ -10,7 +10,7 @@ const FormField = ({ name, label, type, required }) => {
 	return (
 		<FormControl fullWidth margin='normal'>
 			<InputLabel htmlFor={name}>{label}</InputLabel>
-			<Input id={name} type={type} {...register(name, { required: { value: required, message: `${label} es obligatorio` } })} />
+			<Input id={name} type={type} inputProps={{ step: "0.01" }} {...register(name, { required: { value: required, message: `${label} es obligatorio` } })} />
 			{errors[name] && <FormHelperText error>{errors[name].message}</FormHelperText>}
 		</FormControl>
 	);
