@@ -3,36 +3,37 @@ import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select } fro
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { useForm, FormProvider } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import app from '../../config/firebase';
-import { useCartContext } from '../../context/CartContext';
-import FormField from '../../hooks/FormFields';
+import app from '../../../config/firebase';
+import { useCartContext } from '../../../context/CartContext';
+import FormField from '../../../hooks/FormFields';
 
 const db = getFirestore(app);
 
 const OrderForm = () => {
-	const { cartItems, totalPrice, clearCart } = useCartContext();
+	const { pedidos } = useCartContext();
+	const cartData = pedidos;
 	const methods = useForm();
 	const { handleSubmit, register } = methods;
 
-	let total = totalPrice();
+	let total = cartData.totalPrice();
 
 	const onSubmit = async (data) => {
 		const order = {
 			Comprador: data,
-			Items: cartItems,
+			Items: cartData.cartItems,
 			Total: total,
 		};
 		try {
 			const orderRef = collection(db, 'Pedidos');
 			await addDoc(orderRef, order);
 			// Crear mensaje para WhatsApp
-			let productos = cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio}`).join(', ');
+			let productos = cartData.cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio}`).join(', ');
 			let cliente = `Nombre: ${data.nombre}, Dirección: ${data.direccion}, Teléfono: ${data.telefono}, Forma de pago: ${data.formaDePago}`;
 			let mensaje = `${productos}. Total: $${total}. ${cliente}`;
 			// Enviar mensaje a WhatsApp
 			window.open(`https://api.whatsapp.com/send?phone=5493512591067&text=${encodeURIComponent(mensaje)}`, '_blank');
 			// Limpiar carrito y formulario
-			clearCart();
+			cartData.clearCart();
 		} catch (error) {
 			Swal.fire({
 				icon: 'error',
@@ -55,7 +56,9 @@ const OrderForm = () => {
 					</Select>
 					{methods.formState.errors.formaDePago && <FormHelperText error>{methods.formState.errors.formaDePago.message}</FormHelperText>}
 				</FormControl>
-				<Button className="ConfirmaPedido" type='submit'>Confirmar Pedido</Button>
+				<Button className='ConfirmaPedido' type='submit'>
+					Confirmar Pedido
+				</Button>
 			</form>
 		</FormProvider>
 	);

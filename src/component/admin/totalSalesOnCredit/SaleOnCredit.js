@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getFirestore, addDoc } from 'firebase/firestore';
-import app from '../../config/firebase';
+import app from '../../../config/firebase';
 import { Button } from '@mui/material';
 import Swal from 'sweetalert2';
 import { useState } from 'react';

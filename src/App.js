@@ -1,15 +1,23 @@
+import React from 'react';
 import { HashRouter } from 'react-router-dom';
 import './styles/styles.scss';
-import { useAuth } from './component/context/AdminContext';
-import AdminRoutes from './component/routes/AdminRoutes';
-import UserRoutes from './component/routes/UserRoutes';
+import { useAuth } from './context/AdminContext';
+import AdminRoutes from './routes/AdminRoutes';
+import UserRoutes from './routes/UserRoutes';
+import ResponsiveDrawer from './component/navBar/ResponsiveDrawer';
+import Particle from './component/particles/particles';
 
 function App() {
 	const { isAuthenticated } = useAuth();
 
 	return (
 		<div>
-			<HashRouter>{isAuthenticated ? <AdminRoutes /> : <UserRoutes />}</HashRouter>
+			<HashRouter>
+				<Particle id='particles-js' />
+				<ResponsiveDrawer />
+				{/* Condicional para las rutas */}
+				{isAuthenticated ? <AdminRoutes /> : <UserRoutes />}
+			</HashRouter>
 		</div>
 	);
 }

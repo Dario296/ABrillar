@@ -1,6 +1,6 @@
 import { collection, getDocs, getFirestore, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import app from '../../config/firebase';
+import app from '../../../config/firebase';
 import SaleOnCredit from './SaleOnCredit';
 
 const db = getFirestore(app);
@@ -43,20 +43,7 @@ const SalesOnCreditList = () => {
 						</thead>
 						<tbody>
 							{ventas.length > 0 ? (
-								ventas.map((vta) => (
-									<SaleOnCredit
-										key={vta.ID}
-										id={vta.ID}
-										venta={vta}
-										total={vta.total}
-										fecha={vta.fecha}
-										hora={vta.hora}
-										nombre={vta.nombre}
-										recargar={recargar}
-										setRecargar={setRecargar}
-										setCargando={setCargando}
-									/>
-								))
+								ventas.map((vta) => <SaleOnCredit key={vta.ID} id={vta.ID} venta={vta} total={vta.total} fecha={vta.fecha} hora={vta.hora} nombre={vta.nombre} recargar={recargar} setRecargar={setRecargar} setCargando={setCargando} />)
 							) : (
 								<tr>
 									<td colSpan='5'>No hay registros para mostrar</td>

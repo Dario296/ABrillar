@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button, FormControl, InputLabel, Select, MenuItem, FormHelperText, Box, Input } from '@mui/material';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import app from '../../config/firebase';
-import FormFieldsByCategory from '../../hooks/FormFieldsByCategory';
+import app from '../../../config/firebase';
+import FormFieldsByCategory from '../../../hooks/FormFieldsByCategory';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const db = getFirestore(app);
@@ -46,7 +46,7 @@ const CreateProduct = () => {
 					);
 				});
 			}
-            const product = {
+			const product = {
 				categoria,
 				descripcion1,
 				nombre,

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress} from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
-import app from '../../config/firebase';
-import RecipeReviewCard from '../card/Card';
-import RecipeReviewCardOffers from '../card/CardOffers';
-import Swal from "sweetalert2";
+import app from '../../../config/firebase';
+import ViewCard from '../card/ViewCard';
+import ViewCardOfert from '../card/ViewCardOffers'; // Cambiar por las nuevas versiones
+import Swal from 'sweetalert2';
 
 const db = getFirestore(app);
 
-const ProductsListContainer = () => {
+const ProductsList = () => {
 	const { categoria } = useParams();
 	const [productsList, setProductsList] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -51,11 +51,11 @@ const ProductsListContainer = () => {
 		<Grid container spacing={4} direction='row' justifyContent='space-around' alignItems='center'>
 			{productsList.map((product) => (
 				<Grid item key={product.ID}>
-					{categoria === 'ofertas' ? <RecipeReviewCardOffers product={product} /> : <RecipeReviewCard product={product} />}
+					{categoria === 'ofertas' ? <ViewCardOfert product={product} /> : <ViewCard product={product} />}
 				</Grid>
 			))}
 		</Grid>
 	);
 };
 
-export default ProductsListContainer;
+export default ProductsList;
