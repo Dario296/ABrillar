@@ -42,7 +42,7 @@ const SaleOnCredit = ({ total, fecha, hora, nombre, id, venta, recargar, setReca
 			<td>{hora}</td>
 			<td>
 				<Button
-					className='ConfirmaPedido'
+					className='Confirmar'
 					onClick={eliminarFiados}
 					disabled={isProcessing} // Deshabilita el botón mientras se procesa el pago
 				>

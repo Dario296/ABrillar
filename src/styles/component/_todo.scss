@@ -1,0 +1,96 @@
+@use '../utils/shared' as *;
+
+.NavBar{
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+}
+.Flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.HeroSec{
+    display: grid;
+    place-items: center;
+    font-size: clamp(1rem, 2vw, 3rem);
+    margin-top: 100px;
+}
+.SpanHeroSec{
+    color: gold;
+}
+.Card{
+    background-color: transparent !important;
+    border: 4px solid $primary-color;
+    width: 300px;
+}
+.Cart{
+    display: grid;
+    place-items: center;
+}
+.FormularioLogin{
+    margin-left: 25%;
+    width: 50%;
+    display: grid;
+    place-items: center;
+}
+.FormularioPedido{
+    margin-left: 52.5%;
+    transform: translateX(-50%);
+}
+.InputVentas{
+    width: 60px;
+}
+//// botones////
+.Restar{
+    color: $fourth-color !important;
+    border: none !important;
+}
+.Sumar{
+    color: $primary-color !important;
+    border: none !important;
+}
+.Añadir{
+    margin-left:30% !important;
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
+    border-radius: 10% !important;
+}
+.Eliminar{
+    color: $fourth-color !important;
+    border: none !important;
+}
+.Confirmar{
+    background-color: $primary-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
+}
+.VaciarCarrito{
+    background-color: $fourth-color !important;
+    color: $tertiary-color !important;
+    border: none !important;
+}
+.EnviarPresupuesto{
+    background-color: rgb(111, 191, 115) !important;
+    color: $tertiary-color !important;
+    border: none !important;
+}
+.ImgWpsContainer {
+    background-color: #25D366;
+    border-radius: 100%;
+    bottom: 3rem;
+    box-shadow: 0rem 0.1rem 1rem rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    position: fixed;
+    right: 3rem;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+.ImgWpsContainer:hover {
+    transform: scale(1.1);
+}
+.img-wps {
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
+}

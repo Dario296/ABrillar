@@ -42,7 +42,7 @@ const Login = () => {
 					/>
 					{errors.password && <FormHelperText error>{errors.password.message}</FormHelperText>}
 				</FormControl>
-				<Button className='Ingresar' type='submit'>
+				<Button className='Confirmar' type='submit'>
 					Iniciar
 				</Button>
 			</form>

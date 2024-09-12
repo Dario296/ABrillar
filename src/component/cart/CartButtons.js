@@ -8,7 +8,10 @@ import { useAuth } from '../../context/AdminContext';
 const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendPresupuesto, saleInProcess }) => {
 	const methods = useForm();
 	const { handleSubmit } = methods;
-	const onSubmit = async(data) => {await confirmSaleF(data.name); handleClose();}
+	const onSubmit = async (data) => {
+		await confirmSaleF(data.name);
+		handleClose();
+	};
 	const location = useLocation();
 	const { isAuthenticated } = useAuth();
 
@@ -20,7 +23,7 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 						<FormProvider {...methods}>
 							<form onSubmit={handleSubmit(onSubmit)}>
 								<FormField name='name' label='NOMBRE' type='text' required />
-								<Button type='submit' className='ConfirmaPedido' disabled={saleInProcess}>
+								<Button type='submit' className='Confirmar' disabled={saleInProcess}>
 									Confirmar
 								</Button>
 							</form>
@@ -28,7 +31,14 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 					)}
 					{location.pathname === '/' && (
 						<>
-							<Button onClick={async()=>{ await confirmSaleV(); handleClose()}} className='ConfirmaPedido' disabled={saleInProcess}>
+							<Button
+								onClick={async () => {
+									await confirmSaleV();
+									handleClose();
+								}}
+								className='Confirmar'
+								disabled={saleInProcess}
+							>
 								Confirmar
 							</Button>
 							<Button onClick={sendPresupuesto} className='EnviarPresupuesto'>
@@ -39,7 +49,7 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 				</>
 			) : null}
 			{!isAuthenticated && (
-				<Button className='ConfirmaPedido' onClick={handleClose} component={Link} to='/realizarpedido'>
+				<Button className='Confirmar' onClick={handleClose} component={Link} to='/realizarpedido'>
 					Terminar pedido
 				</Button>
 			)}

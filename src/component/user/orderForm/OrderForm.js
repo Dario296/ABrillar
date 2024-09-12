@@ -14,7 +14,7 @@ const OrderForm = () => {
 	const cartData = pedidos;
 	const methods = useForm();
 	const { handleSubmit, register } = methods;
-	const [saleInProcess, setSaleInProcess] = useState(false)
+	const [saleInProcess, setSaleInProcess] = useState(false);
 
 	let total = cartData.totalPrice();
 
@@ -41,7 +41,7 @@ const OrderForm = () => {
 				icon: 'error',
 				text: 'Hubo un problema al procesar su pedido.',
 			});
-		} finally{
+		} finally {
 			setSaleInProcess(false);
 		}
 	};
@@ -60,7 +60,7 @@ const OrderForm = () => {
 					</Select>
 					{methods.formState.errors.formaDePago && <FormHelperText error>{methods.formState.errors.formaDePago.message}</FormHelperText>}
 				</FormControl>
-				<Button className='ConfirmaPedido' type='submit' disabled={saleInProcess}>
+				<Button className='Confirmar' type='submit' disabled={saleInProcess}>
 					Confirmar Pedido
 				</Button>
 			</form>

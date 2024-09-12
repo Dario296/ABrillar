@@ -89,7 +89,7 @@ const CreateProduct = () => {
 						{errors.image && <FormHelperText error>{errors.image.message}</FormHelperText>}
 					</FormControl>
 
-					<Button type='submit' disabled={cargando}>
+					<Button className='Confirmar' type='submit' disabled={cargando}>
 						Guardar
 					</Button>
 				</form>

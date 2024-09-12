@@ -70,7 +70,7 @@ const ProductSale = ({ product }) => {
 				<input className='InputVentas' onChange={handleChangeQuantityMoney} type='number' name='precio' value={quantityMoney} disabled={product.categoria === 'ofertas'} />
 			</td>
 			<Button
-				className={isAgregarDisabled() ? 'agregarVentasD' : 'agregarVentas'}
+				className='Confirmar'
 				onClick={() => {
 					cartData.addToCart(productSale);
 					setQuantity('');

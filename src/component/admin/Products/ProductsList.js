@@ -32,7 +32,7 @@ const ProductsList = () => {
 			{location.pathname === '/editarproductos' ? <EditProductsTable products={filteredProducts} /> : <SalesTable products={filteredProducts} isFiados={location.pathname === '/fiados'} />}
 
 			{/* Botón flotante para búsqueda */}
-			<Fab color='primary' aria-label='search' onClick={handleOpen} style={{ position: 'fixed', bottom: 16, right: 16 }}>
+			<Fab className="Confirmar" onClick={()=>{handleOpen(); setSearchTerm('')}} style={{ position: 'fixed', bottom: 16, right: 16 }}>
 				<SearchIcon />
 			</Fab>
 
