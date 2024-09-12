@@ -3,12 +3,14 @@ import { Button, Box, Modal, Typography } from '@mui/material';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import app from '../../../config/firebase';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useCartContext } from "../../../context/CartContext";
 
 const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 };
 
 const db = getFirestore(app);
 
 const DeleteProduct = ({ id }) => {
+	const { setShouldReload } = useCartContext();
 	const [open, setOpen] = useState(false);
 	const [message, setMessage] = useState('');
 
@@ -24,6 +26,10 @@ const DeleteProduct = ({ id }) => {
 			handleClose(); // Cierra el modal después de eliminar el producto
 		} catch (error) {
 			setMessage('Error al eliminar el producto.');
+		} finally {
+			setTimeout(() => {
+                setShouldReload(true);
+            }, 1500);
 		}
 	};
 

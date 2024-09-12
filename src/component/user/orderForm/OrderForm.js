@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -14,10 +14,12 @@ const OrderForm = () => {
 	const cartData = pedidos;
 	const methods = useForm();
 	const { handleSubmit, register } = methods;
+	const [saleInProcess, setSaleInProcess] = useState(false)
 
 	let total = cartData.totalPrice();
 
 	const onSubmit = async (data) => {
+		setSaleInProcess(true);
 		const order = {
 			Comprador: data,
 			Items: cartData.cartItems,
@@ -39,6 +41,8 @@ const OrderForm = () => {
 				icon: 'error',
 				text: 'Hubo un problema al procesar su pedido.',
 			});
+		} finally{
+			setSaleInProcess(false);
 		}
 	};
 
@@ -56,7 +60,7 @@ const OrderForm = () => {
 					</Select>
 					{methods.formState.errors.formaDePago && <FormHelperText error>{methods.formState.errors.formaDePago.message}</FormHelperText>}
 				</FormControl>
-				<Button className='ConfirmaPedido' type='submit'>
+				<Button className='ConfirmaPedido' type='submit' disabled={saleInProcess}>
 					Confirmar Pedido
 				</Button>
 			</form>

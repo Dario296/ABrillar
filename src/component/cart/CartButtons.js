@@ -5,10 +5,10 @@ import FormField from '../../hooks/FormFields';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AdminContext';
 
-const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendPresupuesto }) => {
+const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendPresupuesto, saleInProcess }) => {
 	const methods = useForm();
 	const { handleSubmit } = methods;
-	const onSubmit = (data) => confirmSaleF(data.name);
+	const onSubmit = async(data) => {await confirmSaleF(data.name); handleClose();}
 	const location = useLocation();
 	const { isAuthenticated } = useAuth();
 
@@ -20,7 +20,7 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 						<FormProvider {...methods}>
 							<form onSubmit={handleSubmit(onSubmit)}>
 								<FormField name='name' label='NOMBRE' type='text' required />
-								<Button type='submit' className='ConfirmaPedido'>
+								<Button type='submit' className='ConfirmaPedido' disabled={saleInProcess}>
 									Confirmar
 								</Button>
 							</form>
@@ -28,7 +28,7 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 					)}
 					{location.pathname === '/' && (
 						<>
-							<Button onClick={confirmSaleV} className='ConfirmaPedido'>
+							<Button onClick={async()=>{ await confirmSaleV(); handleClose()}} className='ConfirmaPedido' disabled={saleInProcess}>
 								Confirmar
 							</Button>
 							<Button onClick={sendPresupuesto} className='EnviarPresupuesto'>

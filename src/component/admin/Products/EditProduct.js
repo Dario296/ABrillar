@@ -6,6 +6,7 @@ import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
 import FormFieldsByCategory from '../../../hooks/FormFieldsByCategory';
 import EditIcon from '@mui/icons-material/Edit';
+import { useCartContext } from "../../../context/CartContext";
 
 const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 };
 
@@ -13,6 +14,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const EditProduct = ({ id }) => {
+	const { setShouldReload } = useCartContext();
 	const [cargando, setCargando] = useState(false);
 	const methods = useForm();
 	const { handleSubmit, watch, setValue, control, reset } = methods;
@@ -35,7 +37,7 @@ const EditProduct = ({ id }) => {
 		}; // Cargar datos del producto existente
 
 		loadProduct();
-	}, [id, setValue]);
+	}, [id, setValue, cargando]);
 
 	const onSubmit = async (data) => {
 		setCargando(true);
@@ -78,6 +80,7 @@ const EditProduct = ({ id }) => {
 			setMessage('Error al modificar el producto.');
 		} finally {
 			setCargando(false);
+			setShouldReload(true);
 		}
 	};
 	const deleteImage = async () => {

@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import app from '../config/firebase';
 import Swal from 'sweetalert2';
+import { useCartContext } from "../context/CartContext";
 
 const db = getFirestore(app);
 
 const ProductsListDB = () => {
 	const [productsList, setProductsList] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const { shouldReload, setShouldReload } = useCartContext();
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -17,6 +19,7 @@ const ProductsListDB = () => {
 				const products = snapshot.docs.map((doc) => ({ ID: doc.id, ...doc.data() }));
 				products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar productos por nombre
 				setProductsList(products);
+				setShouldReload(false);
 			} catch (err) {
 				Swal.fire({
 					icon: 'error',
@@ -28,7 +31,10 @@ const ProductsListDB = () => {
 		};
 
 		fetchProducts();
-	}, []);
+		if (shouldReload) {
+            fetchProducts();
+        }
+	}, [shouldReload, setShouldReload]);
 
 	return { productsList, loading };
 };

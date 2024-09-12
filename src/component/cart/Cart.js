@@ -10,7 +10,7 @@ import { useAuth } from '../../context/AdminContext';
 const Cart = () => {
 	const location = useLocation();
 	const [open, setOpen] = useState(false);
-	const { ventas, fiados, pedidos } = useCartContext();
+	const { ventas, fiados, pedidos, confirmSaleV, confirmSaleF, saleInProcess } = useCartContext();
 	const { isAuthenticated } = useAuth();
 	const cartData = isAuthenticated? location.pathname === '/fiados'? fiados: ventas: pedidos
 	const handleOpen = () => setOpen(true);
@@ -32,7 +32,7 @@ const Cart = () => {
 			<CartIcon handleOpen={handleOpen} quantity={cartData.quantity} />
 			<CartModal open={open} handleClose={handleClose}>
 				<CartTable cartItems={cartData.cartItems} removeFromCart={handleRemoveFromCart} totalPrice={cartData.totalPrice} totalPriceVF={cartData.totalPriceVF} increaseQuantity={cartData.increaseQuantity} decreaseQuantity={cartData.decreaseQuantity} />
-				<CartButtons handleClose={handleClose} clearCart={cartData.clearCart} confirmSaleV={cartData.confirmSaleV} confirmSaleF={cartData.confirmSaleF} sendPresupuesto={sendPresupuesto} />
+				<CartButtons handleClose={handleClose} clearCart={cartData.clearCart} confirmSaleV={confirmSaleV} confirmSaleF={confirmSaleF} sendPresupuesto={sendPresupuesto} saleInProcess={saleInProcess} />
 			</CartModal>
 		</>
 	);
