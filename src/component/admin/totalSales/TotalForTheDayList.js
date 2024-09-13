@@ -52,13 +52,15 @@ const TotalForThePeriod = () => {
 	return (
 		<div>
 			{/* Selector de vista (día o mes) */}
-			<ToggleButtonGroup value={view} exclusive onChange={(e, newView) => setView(newView)} aria-label='Selector de vista'>
+			<ToggleButtonGroup className='DiaMes' value={view} exclusive onChange={(e, newView) => setView(newView)} aria-label='Selector de vista'>
 				<ToggleButton value='day'>Día</ToggleButton>
 				<ToggleButton value='month'>Mes</ToggleButton>
 			</ToggleButtonGroup>
 
 			{/* Mostrar calendario o selector de mes dependiendo de la vista */}
-			<LocalizationProvider dateAdapter={AdapterDayjs}>{view === 'day' ? <DateCalendar value={dayjs(fechaSeleccionada, 'D/M/YYYY')} onChange={(newValue) => setFechaSeleccionada(dayjs(newValue).format('D/M/YYYY'))} /> : <DatePicker views={['year', 'month']} value={dayjs(mesSeleccionado, 'M/YYYY')} onChange={(newValue) => setMesSeleccionado(dayjs(newValue).format('M/YYYY'))} label='Selecciona Mes' format='MMMM YYYY' />}</LocalizationProvider>
+			<div className='SeleccionarDiaMes'>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>{view === 'day' ? <DateCalendar value={dayjs(fechaSeleccionada, 'D/M/YYYY')} onChange={(newValue) => setFechaSeleccionada(dayjs(newValue).format('D/M/YYYY'))} /> : <DatePicker className="Mes" views={['year', 'month']} value={dayjs(mesSeleccionado, 'M/YYYY')} onChange={(newValue) => setMesSeleccionado(dayjs(newValue).format('M/YYYY'))} label='Selecciona Mes' format='MMMM YYYY' />}</LocalizationProvider>
+			</div>
 
 			<h1 className='text-center'>{view === 'day' ? `Total de Ventas del Día: ${fechaSeleccionada} - $${total().toFixed(2)}` : `Total de Ventas del Mes: ${mesSeleccionado} - $${total().toFixed(2)}`}</h1>
 

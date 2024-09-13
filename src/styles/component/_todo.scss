@@ -40,6 +40,40 @@
 .InputVentas{
     width: 60px;
 }
+.Fiados{
+    text-align: center;
+    color: $fourth-color;
+}
+.Ventas{
+    text-align: center;
+    color: $tertiary-color;
+}
+.DiaMes{
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.SeleccionarDiaMes{
+    display: grid;
+    place-items: center;
+}
+.Mes{
+    margin-top: 10px!important;
+}
+.input-file {
+    display: none;
+}
+  
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: $primary-color;
+    color:  $tertiary-color;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+  
 //// botones////
 .Restar{
     color: $fourth-color !important;

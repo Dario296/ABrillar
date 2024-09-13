@@ -6,7 +6,7 @@ import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
 import FormFieldsByCategory from '../../../hooks/FormFieldsByCategory';
 import EditIcon from '@mui/icons-material/Edit';
-import { useCartContext } from "../../../context/CartContext";
+import { useCartContext } from '../../../context/CartContext';
 
 const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 };
 
@@ -100,7 +100,7 @@ const EditProduct = ({ id }) => {
 
 	return (
 		<div>
-			<Button onClick={handleOpen}>
+			<Button className='Sumar' onClick={handleOpen}>
 				<EditIcon />
 			</Button>
 			<Modal open={open} onClose={handleClose}>
@@ -111,7 +111,13 @@ const EditProduct = ({ id }) => {
 							<form onSubmit={handleSubmit(onSubmit)}>
 								<FormFieldsByCategory categoria={categoria} />
 								<FormControl fullWidth margin='normal'>
-									<Controller name='image' control={control} defaultValue={[]} render={({ field }) => <input type='file' onChange={(e) => field.onChange(e.target.files)} accept='image/*' />} />
+									<Controller name='image' control={control} defaultValue={[]} render={({ field }) => (
+											<div className='file-upload'>
+												<input type='file' id='image' className='input-file' onChange={(e) => field.onChange(e.target.files)} accept='image/*' />
+												<label htmlFor='image' className='custom-file-upload'>Seleccionar archivo</label>
+											</div>
+										)}
+									/>
 								</FormControl>
 
 								{productImg && (
@@ -123,11 +129,11 @@ const EditProduct = ({ id }) => {
 									</div>
 								)}
 
-								<Button type='submit' disabled={cargando}>
+								<Button className='Confirmar' type='submit' disabled={cargando}>
 									Guardar
 								</Button>
 								<Button type='buton' onClick={handleClose}>
-									Salir
+									Volver
 								</Button>
 							</form>
 						</div>

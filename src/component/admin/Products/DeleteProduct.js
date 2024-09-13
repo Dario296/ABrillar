@@ -35,7 +35,7 @@ const DeleteProduct = ({ id }) => {
 
 	return (
 		<div>
-			<Button onClick={handleOpen}>
+			<Button className="Eliminar" onClick={handleOpen}>
 				<DeleteIcon />
 			</Button>
 			<Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
@@ -44,8 +44,8 @@ const DeleteProduct = ({ id }) => {
 					<Typography>Esta acción no se puede deshacer.</Typography>
 
 					<Box mt={3} display='flex' justifyContent='space-between'>
-						<Button onClick={deleteProduct}>Eliminar</Button>
-						<Button onClick={handleClose}>Cancelar</Button>
+						<Button className="Confirmar" onClick={deleteProduct}>Eliminar</Button>
+						<Button className="Eliminar" onClick={handleClose}>Cancelar</Button>
 					</Box>
 				</Box>
 			</Modal>

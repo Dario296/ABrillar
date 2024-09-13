@@ -5,8 +5,7 @@ import Grid from '@mui/material/Grid2';
 import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 import app from '../../../config/firebase';
 import ViewCard from '../card/ViewCard';
-import ViewCardOfert from '../card/ViewCardOffers'; // Cambiar por las nuevas versiones
-import Swal from 'sweetalert2';
+import ViewCardOfert from '../card/ViewCardOffers';
 
 const db = getFirestore(app);
 
@@ -25,10 +24,7 @@ const ProductsList = () => {
 				products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordena productos por nombre
 				setProductsList(products);
 			} catch (err) {
-				Swal.fire({
-					icon: 'error',
-					text: 'Error al cargar los productos.',
-				});
+				console.log("Error: " + err);				
 			} finally {
 				setLoading(false);
 			}

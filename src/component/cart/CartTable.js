@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AdminContext';
 const CartTable = ({ cartItems, removeFromCart, totalPrice, increaseQuantity, decreaseQuantity, totalPriceVF }) => {
 	const { isAuthenticated } = useAuth();
 	return (
-		<Table striped bordered hover size='sm' responsive>
+		<Table bordered responsive>
 			<thead>
 				<tr>
 					<th>Nombre</th>
@@ -22,22 +22,22 @@ const CartTable = ({ cartItems, removeFromCart, totalPrice, increaseQuantity, de
 				{cartItems.map((item) => (
 					<tr key={item.ID}>
 						<td>{item.nombre}</td>
-						<td>
+						<td className="Flex">
 							{isAuthenticated ? null : (
-								<IconButton onClick={() => decreaseQuantity(item.ID)}>
+								<IconButton className="Restar" onClick={() => decreaseQuantity(item.ID)}>
 									<RemoveIcon />
 								</IconButton>
 							)}
 							{item.cantidad}
 							{isAuthenticated ? null : (
-								<IconButton onClick={() => increaseQuantity(item.ID)}>
+								<IconButton className="Sumar" onClick={() => increaseQuantity(item.ID)}>
 									<AddIcon />
 								</IconButton>
 							)}
 						</td>
 						<td>${isAuthenticated ? item.precio : item.precio * item.cantidad}</td>
 						<td>
-							<IconButton onClick={() => removeFromCart(item.ID)}>
+							<IconButton className="Eliminar" onClick={() => removeFromCart(item.ID)}>
 								<DeleteIcon />
 							</IconButton>
 						</td>

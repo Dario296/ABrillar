@@ -21,7 +21,7 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 				<>
 					{location.pathname === '/fiados' && (
 						<FormProvider {...methods}>
-							<form onSubmit={handleSubmit(onSubmit)}>
+							<form className='text-center my-2' onSubmit={handleSubmit(onSubmit)}>
 								<FormField name='name' label='NOMBRE' type='text' required />
 								<Button type='submit' className='Confirmar' disabled={saleInProcess}>
 									Confirmar
@@ -36,12 +36,12 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 									await confirmSaleV();
 									handleClose();
 								}}
-								className='Confirmar'
+								className='Confirmar mb-2'
 								disabled={saleInProcess}
 							>
 								Confirmar
 							</Button>
-							<Button onClick={sendPresupuesto} className='EnviarPresupuesto'>
+							<Button onClick={sendPresupuesto} className='EnviarPresupuesto mb-2'>
 								Enviar Presupuesto
 							</Button>
 						</>
@@ -49,7 +49,7 @@ const CartButtons = ({ clearCart, confirmSaleF, confirmSaleV, handleClose, sendP
 				</>
 			) : null}
 			{!isAuthenticated && (
-				<Button className='Confirmar' onClick={handleClose} component={Link} to='/realizarpedido'>
+				<Button className='Confirmar mb-2' onClick={handleClose} component={Link} to='/realizarpedido'>
 					Terminar pedido
 				</Button>
 			)}

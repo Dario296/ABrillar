@@ -7,7 +7,7 @@ import app from '../config/firebase';
 const db = getFirestore(app);
 
 // Hook personalizado para manejar los carritos
-const useCartHandler = (cartType) => {
+const useCartHandler = () => {
 	const [cartItems, setCartItems] = useState([]); // Estado para los ítems del carrito
 
 	// Añadir un ítem al carrito, o actualizarlo si ya existe

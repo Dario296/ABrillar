@@ -5,9 +5,9 @@ import Swal from "sweetalert2";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-	const ventas = useCartHandler('ventas');
-	const fiados = useCartHandler('fiados');
-	const pedidos = useCartHandler('pedidos');
+	const ventas = useCartHandler();
+	const fiados = useCartHandler();
+	const pedidos = useCartHandler();
 	const [saleInProcess, setSaleInProcess] = useState(false);
     const [shouldReload, setShouldReload] = useState(false);
 	const confirmSaleV = async () => {
