@@ -5,7 +5,7 @@ import ProductSale from './ProductSale';
 const SalesTable = ({ products, isFiados }) => {
 	return (
 		<>
-			<h1 className={isFiados? 'Fiados': 'Ventas'} >{isFiados ? 'Fiados' : 'Ventas'}</h1>
+			<h1 className={isFiados ? 'Fiados' : 'Ventas'}>{isFiados ? 'Fiados' : 'Ventas'}</h1>
 			<Table striped bordered hover size='sm' responsive>
 				<thead>
 					<tr>

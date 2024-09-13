@@ -6,7 +6,6 @@ import ProductCard from './ProductCard';
 
 const db = getFirestore(app);
 
-// Función para calcular precio redondeado
 const calculatePrice = (cost, porcentaje, unidades = 1) => Math.ceil((cost * unidades + (cost * unidades * porcentaje) / 100) / 50) * 50;
 export default function ViewCardOfert({ product }) {
 	const [productRef, setProductRef] = useState(null);

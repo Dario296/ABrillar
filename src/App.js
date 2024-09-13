@@ -15,7 +15,6 @@ function App() {
 			<HashRouter>
 				<Particle id='particles-js' />
 				<ResponsiveDrawer />
-				{/* Condicional para las rutas */}
 				{isAuthenticated ? <AdminRoutes /> : <UserRoutes />}
 			</HashRouter>
 		</div>

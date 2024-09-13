@@ -31,12 +31,17 @@ const ProductsList = () => {
 		<>
 			{location.pathname === '/editarproductos' ? <EditProductsTable products={filteredProducts} /> : <SalesTable products={filteredProducts} isFiados={location.pathname === '/fiados'} />}
 
-			{/* Botón flotante para búsqueda */}
-			<Fab className="Confirmar" onClick={()=>{handleOpen(); setSearchTerm('')}} style={{ position: 'fixed', bottom: 16, right: 16 }}>
+			<Fab
+				className='Confirmar'
+				onClick={() => {
+					handleOpen();
+					setSearchTerm('');
+				}}
+				style={{ position: 'fixed', bottom: 16, right: 16 }}
+			>
 				<SearchIcon />
 			</Fab>
 
-			{/* Modal de búsqueda */}
 			<Modal open={open} onClose={handleClose}>
 				<Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 300, bgcolor: 'background.paper', p: 4, borderRadius: 2, boxShadow: 24 }}>
 					<TextField autoFocus fullWidth label='Buscar Producto' variant='outlined' onChange={handleSearch} placeholder='Nombre del producto' />

@@ -85,13 +85,19 @@ const CreateProduct = () => {
 
 					<FormFieldsByCategory categoria={categoria} />
 					<FormControl fullWidth margin='normal'>
-					<Controller name='image' control={control} defaultValue={[]} render={({ field }) => (
-											<div className='file-upload'>
-												<input type='file' id='image' className='input-file' onChange={(e) => field.onChange(e.target.files)} accept='image/*' />
-												<label htmlFor='image' className='custom-file-upload'>Seleccionar archivo</label>
-											</div>
-										)}
-									/>
+						<Controller
+							name='image'
+							control={control}
+							defaultValue={[]}
+							render={({ field }) => (
+								<div className='file-upload'>
+									<input type='file' id='image' className='input-file' onChange={(e) => field.onChange(e.target.files)} accept='image/*' />
+									<label htmlFor='image' className='custom-file-upload'>
+										Seleccionar archivo
+									</label>
+								</div>
+							)}
+						/>
 						{errors.image && <FormHelperText error>{errors.image.message}</FormHelperText>}
 					</FormControl>
 

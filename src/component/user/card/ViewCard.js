@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { useCartContext } from '../../../context/CartContext';
 import ProductCard from './ProductCard';
 
-// Función para calcular precio redondeado
 const calculatePrice = (cost, porcentaje, unidades = 1) => Math.ceil((cost * unidades + (cost * unidades * porcentaje) / 100) / 50) * 50;
 
-// Componente para productos sin oferta
 export default function ViewCard({ product }) {
 	const [quantity, setQuantity] = useState(0);
 	const { pedidos } = useCartContext();

@@ -3,7 +3,7 @@ import { Button, Box, Modal, Typography } from '@mui/material';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import app from '../../../config/firebase';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useCartContext } from "../../../context/CartContext";
+import { useCartContext } from '../../../context/CartContext';
 
 const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 };
 
@@ -17,25 +17,24 @@ const DeleteProduct = ({ id }) => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
-	// Función para eliminar el producto
 	const deleteProduct = async () => {
 		try {
 			const productRef = doc(db, 'ListadoProductos', id);
-			await deleteDoc(productRef); // Elimina el producto
+			await deleteDoc(productRef);
 			setMessage(`Producto eliminado con éxito. ID: ${id}`);
-			handleClose(); // Cierra el modal después de eliminar el producto
+			handleClose();
 		} catch (error) {
 			setMessage('Error al eliminar el producto.');
 		} finally {
 			setTimeout(() => {
-                setShouldReload(true);
-            }, 1500);
+				setShouldReload(true);
+			}, 1500);
 		}
 	};
 
 	return (
 		<div>
-			<Button className="Eliminar" onClick={handleOpen}>
+			<Button className='Eliminar' onClick={handleOpen}>
 				<DeleteIcon />
 			</Button>
 			<Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
@@ -44,8 +43,12 @@ const DeleteProduct = ({ id }) => {
 					<Typography>Esta acción no se puede deshacer.</Typography>
 
 					<Box mt={3} display='flex' justifyContent='space-between'>
-						<Button className="Confirmar" onClick={deleteProduct}>Eliminar</Button>
-						<Button className="Eliminar" onClick={handleClose}>Cancelar</Button>
+						<Button className='Confirmar' onClick={deleteProduct}>
+							Eliminar
+						</Button>
+						<Button className='Eliminar' onClick={handleClose}>
+							Cancelar
+						</Button>
 					</Box>
 				</Box>
 			</Modal>

@@ -33,17 +33,17 @@ const ProductSale = ({ product }) => {
 
 	const handleChangeQuantity = (e) => {
 		const value = Number(e.target.value);
-		const roundedQuantity = parseFloat(value.toFixed(2)); // Redondea a dos decimales
+		const roundedQuantity = parseFloat(value.toFixed(2));
 		setQuantity(roundedQuantity);
-		setQuantityMoney(parseFloat((roundedQuantity * price).toFixed(2))); // Redondea a dos decimales
-	}; // Manejar el cambio en cantidad
+		setQuantityMoney(parseFloat((roundedQuantity * price).toFixed(2)));
+	};
 
 	const handleChangeQuantityMoney = (e) => {
 		const value = Number(e.target.value);
-		const result = parseFloat((value / price).toFixed(2)); // Redondea a dos decimales
+		const result = parseFloat((value / price).toFixed(2));
 		setQuantity(result);
-		setQuantityMoney(parseFloat(value.toFixed(2))); // Redondea a dos decimales
-	}; // Manejar el cambio en cantidad de dinero
+		setQuantityMoney(parseFloat(value.toFixed(2)));
+	};
 
 	const productSale = {
 		ID: product.ID,
@@ -52,11 +52,11 @@ const ProductSale = ({ product }) => {
 		precio: quantityMoney,
 		IDRef: product.referencia || null,
 		unidades: product.unidades || null,
-	}; // Crear objeto productSale para agregar al carrito
+	};
 
 	const isAgregarDisabled = () => {
 		return stockDisponible === 0 || quantity <= 0 || quantityMoney <= 0 || stockDisponible < quantity;
-	}; // Verificar si el botón de agregar debe estar deshabilitado
+	};
 
 	return (
 		<tr>

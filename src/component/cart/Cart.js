@@ -12,13 +12,13 @@ const Cart = () => {
 	const [open, setOpen] = useState(false);
 	const { ventas, fiados, pedidos, confirmSaleV, confirmSaleF, saleInProcess } = useCartContext();
 	const { isAuthenticated } = useAuth();
-	const cartData = isAuthenticated? location.pathname === '/fiados'? fiados: ventas: pedidos
+	const cartData = isAuthenticated ? (location.pathname === '/fiados' ? fiados : ventas) : pedidos;
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const handleRemoveFromCart = (itemId) => {
 		cartData.removeFromCart(itemId);
 		if (cartData.cartItems.length === 1) {
-			handleClose(); // Si queda un solo ítem en el carrito, cerramos el modal al eliminarlo.
+			handleClose();
 		}
 	};
 	const sendPresupuesto = () => {

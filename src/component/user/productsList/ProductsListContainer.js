@@ -21,10 +21,10 @@ const ProductsList = () => {
 				const answer = query(ref, where('categoria', '==', categoria));
 				const snapshot = await getDocs(answer);
 				let products = snapshot.docs.map((doc) => ({ ID: doc.id, ...doc.data() }));
-				products.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordena productos por nombre
+				products.sort((a, b) => a.nombre.localeCompare(b.nombre));
 				setProductsList(products);
 			} catch (err) {
-				console.log("Error: " + err);				
+				console.log('Error: ' + err);
 			} finally {
 				setLoading(false);
 			}
@@ -32,7 +32,7 @@ const ProductsList = () => {
 
 		fetchProducts();
 
-		return () => setProductsList([]); // Limpia los productos al desmontar
+		return () => setProductsList([]);
 	}, [categoria]);
 
 	if (loading) {
@@ -41,7 +41,7 @@ const ProductsList = () => {
 				<CircularProgress />
 			</Grid>
 		);
-	} // Muestra indicador de carga mientras se cargan los productos
+	}
 
 	return (
 		<Grid container spacing={4} direction='row' justifyContent='space-around' alignItems='center'>

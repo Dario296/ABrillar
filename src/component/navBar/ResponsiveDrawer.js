@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Box, CssBaseline } from '@mui/material';
-import { Main, DrawerHeader } from './NavBarStyles'; // Componentes estilizados
-import AppHeader from './AppHeader'; // Componente del encabezado
-import NavDrawer from './NavDrawer'; // Componente del Drawer
+import { Main, DrawerHeader } from './NavBarStyles';
+import AppHeader from './AppHeader';
+import NavDrawer from './NavDrawer';
 
 export default function ResponsiveDrawer() {
 	const [open, setOpen] = React.useState(false);

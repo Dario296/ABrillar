@@ -7,12 +7,12 @@ import { useState } from 'react';
 const db = getFirestore(app);
 
 const SaleOnCredit = ({ total, fecha, hora, nombre, id, venta, recargar, setRecargar, setCargando }) => {
-	const [isProcessing, setIsProcessing] = useState(false); // Estado para bloquear el botón durante el proceso
+	const [isProcessing, setIsProcessing] = useState(false);
 	const ventaRef = collection(db, 'Ventas');
 
 	const eliminarFiados = async () => {
 		setCargando('Espere por favor...');
-		setIsProcessing(true); // Bloquea el botón
+		setIsProcessing(true);
 		try {
 			const ven = {
 				fecha: fecha,
@@ -41,11 +41,7 @@ const SaleOnCredit = ({ total, fecha, hora, nombre, id, venta, recargar, setReca
 			<td>{fecha}</td>
 			<td>{hora}</td>
 			<td>
-				<Button
-					className='Confirmar'
-					onClick={eliminarFiados}
-					disabled={isProcessing} // Deshabilita el botón mientras se procesa el pago
-				>
+				<Button className='Confirmar' onClick={eliminarFiados} disabled={isProcessing}>
 					Pago
 				</Button>
 			</td>

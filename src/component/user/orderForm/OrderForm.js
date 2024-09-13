@@ -28,13 +28,10 @@ const OrderForm = () => {
 		try {
 			const orderRef = collection(db, 'Pedidos');
 			await addDoc(orderRef, order);
-			// Crear mensaje para WhatsApp
 			let productos = cartData.cartItems.map((producto) => `${producto.cantidad} x ${producto.nombre}: $${producto.precio}`).join(', ');
 			let cliente = `Nombre: ${data.nombre}, Dirección: ${data.direccion}, Teléfono: ${data.telefono}, Forma de pago: ${data.formaDePago}`;
 			let mensaje = `${productos}. Total: $${total}. ${cliente}`;
-			// Enviar mensaje a WhatsApp
 			window.open(`https://api.whatsapp.com/send?phone=5493512591067&text=${encodeURIComponent(mensaje)}`, '_blank');
-			// Limpiar carrito y formulario
 			cartData.clearCart();
 		} catch (error) {
 			Swal.fire({

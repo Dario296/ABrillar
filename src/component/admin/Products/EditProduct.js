@@ -21,7 +21,7 @@ const EditProduct = ({ id }) => {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-	const categoria = watch('categoria'); // Observa el valor de "categoria"
+	const categoria = watch('categoria');
 	const [message, setMessage] = useState('');
 	const [productImg, setProductImg] = useState('');
 
@@ -34,7 +34,7 @@ const EditProduct = ({ id }) => {
 				setValue(key, productData[key]);
 			}
 			setProductImg(productData.img || '');
-		}; // Cargar datos del producto existente
+		};
 
 		loadProduct();
 	}, [id, setValue, cargando]);
@@ -68,7 +68,7 @@ const EditProduct = ({ id }) => {
 			porcentaje: Number(porcentaje),
 			...(categoria === 'ofertas' ? { referencia, unidades: Number(unidades) } : { costo: Number(costo), stock: Number(stock) }),
 			img: imageUrl,
-		}; // Crear el objeto producto basado en la categoría
+		};
 
 		try {
 			const productRef = doc(db, 'ListadoProductos', id);
@@ -88,9 +88,9 @@ const EditProduct = ({ id }) => {
 			const imgRef = ref(storage, productImg);
 			try {
 				await deleteObject(imgRef);
-				setProductImg(''); // Eliminar la referencia de la imagen
+				setProductImg('');
 				const productRef = doc(db, 'ListadoProductos', id);
-				await updateDoc(productRef, { img: '' }); // Eliminar la URL de la imagen en Firestore
+				await updateDoc(productRef, { img: '' });
 				setMessage('Imagen eliminada con éxito.');
 			} catch (error) {
 				setMessage('Error al eliminar la imagen.');
@@ -111,10 +111,16 @@ const EditProduct = ({ id }) => {
 							<form onSubmit={handleSubmit(onSubmit)}>
 								<FormFieldsByCategory categoria={categoria} />
 								<FormControl fullWidth margin='normal'>
-									<Controller name='image' control={control} defaultValue={[]} render={({ field }) => (
+									<Controller
+										name='image'
+										control={control}
+										defaultValue={[]}
+										render={({ field }) => (
 											<div className='file-upload'>
 												<input type='file' id='image' className='input-file' onChange={(e) => field.onChange(e.target.files)} accept='image/*' />
-												<label htmlFor='image' className='custom-file-upload'>Seleccionar archivo</label>
+												<label htmlFor='image' className='custom-file-upload'>
+													Seleccionar archivo
+												</label>
 											</div>
 										)}
 									/>
