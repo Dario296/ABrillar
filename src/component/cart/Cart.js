@@ -23,7 +23,7 @@ const Cart = () => {
 	};
 	const sendPresupuesto = () => {
 		const productos = cartData.cartItems.map((producto) => `$${producto.precio} - ${producto.nombre} x ${producto.cantidad}.\n`).join('');
-		const mensaje = `${productos}Total: $${cartData.totalPrice()}.`;
+		const mensaje = `${productos}Total: $${cartData.totalPriceVF()}.`;
 		window.open(`https://api.whatsapp.com/send?phone=5493512591067&text=${encodeURIComponent(mensaje)}`, '_blank');
 	};
 
